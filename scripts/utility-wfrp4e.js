@@ -33,6 +33,34 @@ class WFRP_Utility
     return description;
   }
 
+
+  static propertyText(property)
+  {
+    let properties = mergeObject(WFRP_Utility.qualityList(), WFRP_Utility.flawList()), // Property names
+        propertyDescr = Object.assign(duplicate(WFRP4E.qualityDescriptions), WFRP4E.flawDescriptions); // Property descriptions
+
+    property = property.replace(/,/g, '').trim(); // Remove commas/whitespace
+    let propertyKey = "";
+    propertyKey = WFRP_Utility.findKey(property.split(" ")[0], properties)
+
+    let propertyDescription = "<b>" + property + "</b>" + ": " + propertyDescr[propertyKey];
+    if (propertyDescription.includes("(Rating)"))
+      propertyDescription = propertyDescription.replace("(Rating)", property.split(" ")[1])
+
+    if (property.includes("Momentum"))
+    {
+      let innerProperty = property.substring(property.indexOf("(")+1, property.indexOf(")"))
+      let innerPropertyDescr = this.propertyText(innerProperty)
+
+      propertyDescription += 
+      `
+      <br><br>
+      ${innerPropertyDescr}
+      `;
+    }
+    return propertyDescription
+  }
+
   /**
    * Used when preparing armour - every time an armour item is prepared it's added as a layer. Each
    * layer has booleans for qualities/flaws and an AP value
@@ -547,16 +575,7 @@ class WFRP_Utility
    */
   static postProperty(property)
   {
-    let properties = mergeObject(WFRP_Utility.qualityList(), WFRP_Utility.flawList()),
-      propertyDescr = Object.assign(duplicate(WFRP4E.qualityDescriptions), WFRP4E.flawDescriptions),
-      propertyKey;
-
-    property = property.replace(/,/g, '').trim();
-
-    propertyKey = WFRP_Utility.findKey(property.split(" ")[0], properties)
-
-    let propertyDescription = `<b>${property}:</b><br>${propertyDescr[propertyKey]}`;
-    propertyDescription = propertyDescription.replace("(Rating)", property.split(" ")[1])
+    let propertyDescription = this.propertyText(property);
 
 
     let chatOptions = {
@@ -716,17 +735,21 @@ class WFRP_Utility
    */
   static handleTableClick(event)
   {
-    // Sin from wrath of the gods if available
-    let sin = Number($(event.currentTarget).attr("data-sin"));
-    let modifier = sin * 10 || 0;
+    let modifier = parseInt($(event.currentTarget).attr("data-modifier")) || 0;
     let html;
     let chatOptions = this.chatDataSetup("", game.settings.get("core", "rollMode"))
-
+    if (event.target.text)
+      event.target.text = event.target.text.trim();
     if (event.button == 0)
     {
       if (event.target.text == game.i18n.localize("ROLL.CritCast"))
       {
         html = WFRP_Tables.criticalCastMenu($(event.currentTarget).attr("data-table"));
+      }
+
+      else if (event.target.text == game.i18n.localize("ROLL.CritChannel"))
+      {
+        html = "<b>Critical Casting</b>: You automatically channel up to the spell's CN, and if you successfully cast the spell next turn, you add +SL equal to the CN of the spell (this SL cannot be used for overcasting)"
       }
 
       else if (event.target.text == game.i18n.localize("ROLL.TotalPower"))
@@ -738,12 +761,6 @@ class WFRP_Utility
         let damage = $(event.currentTarget).attr("data-damage")
         html = `<b>${game.i18n.localize("Misfire")}</b>: ${game.i18n.localize("ROLL.MisfireText1")} ${damage} ${game.i18n.localize("ROLL.MisfireText2")}`;
       }
-      else if (sin)
-        html = WFRP_Tables.formatChatRoll($(event.currentTarget).attr("data-table"),
-        {
-          modifier: modifier,
-          maxSize: false
-        });
       else
         html = WFRP_Tables.formatChatRoll($(event.currentTarget).attr("data-table"),
         {

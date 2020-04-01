@@ -1,0 +1,67 @@
+{
+  "name": "Weather Table",
+  "columns": ["Spring", "Summer", "Autumn", "Winter"],
+  "die" : "1d100",
+  "rows": [
+    {
+      "range":{
+        "Spring" : [1, 10],
+        "Summer" : [1, 40],
+        "Autumn" : [1, 30],
+        "Winter" : []
+      },
+      "name": "Dry",
+      "description" : "Prolonged dry weather causes curtains of dust to blow across the road at the slightest breeze, obscuring vision and parching throats. Travel is easy, if uncomfortable, but Forage Endeavours are at a −10 as the weather makes finding water harder."
+    },
+    {
+      "range":{
+        "Spring" : [11, 30],
+        "Summer" : [41, 70],
+        "Autumn" : [31, 60],
+        "Winter" : [1, 10]
+      },
+      "name": "Fair",
+      "description" : "For once, the weather is being kind. There are no weather-related hazards."
+    },
+    {
+      "range":{
+        "Spring" : [31, 90],
+        "Summer" : [71, 95],
+        "Autumn" : [61, 90],
+        "Winter" : [11, 60]
+      },
+      "name": "Rain",
+      "description" : "Rain can last anywhere from a few hours to a few days. The ‘spring showers’ so beloved of poets can sometimes last up to a week, proving that poets spend remarkably little time outdoors away from wine and warmth. Rain reduces visibility to 75 ft or less. Additionally, ranged weapons suffer a –10 penalty to use due to driving wind and rain."
+    },
+    {
+      "range":{
+        "Spring" : [91, 95],
+        "Summer" : [96, 100],
+        "Autumn" : [91, 98],
+        "Winter" : [61, 65]
+      },
+      "name": "Downpour",
+      "description" : "Terrible storms reduce visibility to near zero, making any sound below a shout impossible to hear and imposing a –10 penalty on all physical Tests. Everything and everyone not under cover is soaked through within minutes. Water streams off the road, carving deep gullies so that the road is churned to little more than a bog. Ranged weapons suffer a –20 penalty to use due to the terrible weather, and exposed gunpowder is immediately ruined. Animals with the Skittish Trait may also become spooked by sudden jolts of lightning during bad storms."
+    },
+    {
+      "range":{
+        "Spring" : [96, 100],
+        "Summer" : [],
+        "Autumn" : [99, 100],
+        "Winter" : [66, 90]
+      },
+      "name": "Snow",
+      "description" : "A gentle snow covers the world in a blanket of white, making everything seem new and clean. It is undoubtedly beautiful, until one has to move through it. Snow reduces visibility to 150 ft, and makes movement faster than Walking impossible. Characters travelling in Snow must make an <b>Average (+20) Endurance</b> Test or gain a <b><a class = 'condition-chat'>Fatigued</a></b> Condition."
+    },
+    {
+      "range":{
+        "Spring" : [],
+        "Summer" : [],
+        "Autumn" : [],
+        "Winter" : [91, 100]
+      },
+      "name": "Blizzard",
+      "description" : "Snow turns everything into a sightless white hell. The road disappears beneath a fast-accumulating blanket of snow, leaving only trees to steer by. Visibility is close to zero. Movement faster than Walking is impossible. Ranged weapons are useless in these conditions. Characters travelling in a Blizzard must make a <b>Challenging (+0) Endurance</b> Test or gain a <b><a class = 'condition-chat'>Fatigued</a></b> Condition."
+    }
+   ]
+}

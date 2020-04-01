@@ -581,7 +581,10 @@ WFRP4E.weaponQualities = {
 	"shield": "Shield",
 	"trapblade": "Trap Blade",
 	"unbreakable": "Unbreakable",
-	"wrap": "Wrap"
+	"wrap": "Wrap",
+	"momentum": "Momentum",
+	"simple": "Simple"
+
 };
 
 // Weapon Flaws
@@ -608,12 +611,12 @@ WFRP4E.qualityDescriptions = {
 	"hack": "WFRP4E.Properties.Hack",
 	"impact": "WFRP4E.Properties.Impact",
 	"impale": "WFRP4E.Properties.Impale",
-	"penetrating": "WFRP4E.Properties.Penetrating",
+	"penetrating": "The weapon is highly effective at penetrating armour. It ignores (Rating) AP.",
 	"pistol": "WFRP4E.Properties.Pistol",
 	"precise": "WFRP4E.Properties.Precise",
 	"pummel": "WFRP4E.Properties.Pummel",
 	"repeater": "WFRP4E.Properties.Repeater",
-	"shield": "WFRP4E.Properties.Shield",
+	"shield": "If you use this weapon to oppose an incoming attack and succeed on your test, you count as having (Rating) Armour Points on all locations of your body. If your weapon has a Shield Rating of 2 or higher (so: Shield 2 or Shield 3), you may also Oppose incoming missile shots in your Line of Sight.",
 	"trapblade": "WFRP4E.Properties.Trapblade",
 	"unbreakable": "WFRP4E.Properties.Unbreakable",
 	"wrap": "WFRP4E.Properties.Wrap",
@@ -623,6 +626,8 @@ WFRP4E.qualityDescriptions = {
 	"fine": "WFRP4E.Properties.Fine",
 	"lightweight": "WFRP4E.Properties.Lightweight",
 	"practical": "WFRP4E.Properties.Practical",
+	"simple" : "This weapon is easy and simple to use. You can use this with with Melee (Basic) or the skill tied to its native group.",
+	"momentum" : "This weapon is difficult to bring to bear, if you Charge with this weapon, you gain the Quality listed:"
 };
 
 // Weapon Flaw Descriptions (used in dropdown info)
@@ -630,7 +635,7 @@ WFRP4E.flawDescriptions = {
 	"dangerous": "WFRP4E.Properties.Dangerous",
 	"imprecise": "WFRP4E.Properties.Imprecise",
 	"reload": "WFRP4E.Properties.Reload",
-	"slow": "WFRP4E.Properties.Slow",
+	"slow": "Slow weapons are unwieldy and heavy, making them difficult to use properly. Characters using Slow weapons always strike last in a Round, regardless of Initiative order. Further, opponents gain a bonus of +1 SL to Dodge Tests opposing your attack",
 	"tiring": "WFRP4E.Properties.Tiring",
 	"undamaging": "WFRP4E.Properties.Undamaging",
 	"partial": "WFRP4E.Properties.Partial",
@@ -664,34 +669,52 @@ WFRP4E.armorTypes = {
 
 // Range Test Modifiers
 WFRP4E.rangeModifiers = {
-	"Point Blank": "Easy (+40)",
+	"Point Blank": "Easy (+30)",
 	"Short Range": "Average (+20)",
 	"Normal": "Challenging (+0)",
-	"Long Range": "Difficult (-10)",
-	"Extreme": "Very Hard (-30)",
+	"Long Range": "Difficult (-20)",
+	"Extreme": "very Hard (-40)",
+}
+
+// Range Test Modifiers
+WFRP4E.rangeBands = {
+	"pointBlank": "Point Blank",
+	"shortRange": "Short Range",
+	"normal": "Normal",
+	"longRange": "Long Range",
+	"extreme": "Extreme",
+}
+
+// Range Test Modifiers
+WFRP4E.bandNum = {
+	"pointBlank": 0,
+	"shortRange": 1,
+	"normal": 2,
+	"longRange": 3,
+	"extreme":4,
 }
 
 // Difficulty Modifiers
 WFRP4E.difficultyModifiers = {
-	"veasy": 60,
-	"easy": 40,
+	"veasy": 40,
+	"easy": 30,
 	"average": 20,
 	"challenging": 0,
-	"difficult": -10,
-	"hard": -20,
-	"vhard": -30
+	"difficult": -20,
+	"hard": -30,
+	"vhard": -40
 }
 
 // Difficulty Labels
 WFRP4E.difficultyLabels = {
 
-	"veasy": "Very Easy (+60)",
-	"easy": "Easy (+40)",
+	"veasy": "Very Easy (+40)",
+	"easy": "Easy (+30)",
 	"average": "Average (+20)",
 	"challenging": "Challenging (+0)",
-	"difficult": "Difficult (-10)",
-	"hard": "Hard (-20)",
-	"vhard": "Very Hard (-30)"
+	"difficult": "Difficult (-20)",
+	"hard": "Hard (-30)",
+	"vhard": "Very Hard (-40)"
 }
 
 WFRP4E.locations = {
@@ -869,15 +892,15 @@ WFRP4E.conditions = {
 
 
 WFRP4E.conditionDescriptions = {
-	"ablaze": "WFRP4E.Conditions.Ablaze",
-	"bleeding": "WFRP4E.Conditions.Bleeding",
+	"ablaze": "At the end of your Turn, you suffer <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> Wounds to a random<a class ='table-click' data-table='hitloc'><i class='fas fa-list'></i> Hit Location</a>, modified by Toughness Bonus and Armor Points, with a minimum of 1 Wound suffered, and if armour exists at that location it is damaged by 1. Each extra Ablaze Condition you have adds +1 to the Damage suffered; so, three Ablaze Conditions result in 1d10+2 Damage suffered.<br><br>One Ablaze Condition can be removed with a successful Athletics Test, with each SL removing an extra Ablaze Condition. The Difficulty for this Test is modified by circumstances: it’s much easier to put out a fire rolling around on sand than it is in the middle of an oil-soaked kitchen",
+	"bleeding": "You are bleeding badly. Lose 1 Wound at the end of your Turn, ignoring all modifiers. Further, suﬀer a penalty of –10 to any Tests to resist Festering Wounds, Minor Infection, or Blood Rot. If you reach 0 Wounds and fail your Endurance test to stay standing up, you fall <a class = 'condition-chat'><i class='fas fa-user-injured'></i> Unconscious</a>,<br><br>Regardless of if you are Unconscious or not, you have a 10% chance of dying at the end of your Turn per Bleeding Condition if you are at 0 Wounds. If a double is scored on this roll, your wound clots a little: lose 1 Bleeding.<br><br>You cannot regain consciousness until all Bleeding Conditions are removed.<br><br>A Bleeding Condition can be removed with: a successful Heal Test, with each SL removing an extra Bleeding Condition; or with any spell or prayer that heals Wounds, with one Condition removed per Wound healed.<br><br>Once all Bleeding Conditions are removed, gain one <a class = 'condition-chat'><i class='fas fa-user-injured'></i> Fatigued</a> Condition.",
 	"blinded": "WFRP4E.Conditions.Blinded",
 	"broken": "WFRP4E.Conditions.Broken",
 	"deafened": "WFRP4E.Conditions.Deafened",
 	"entangled": "WFRP4E.Conditions.Entangled",
 	"fatigued": "WFRP4E.Conditions.Fatigued",
 	"poisoned": "WFRP4E.Conditions.Poisoned",
-	"prone": "WFRP4E.Conditions.Prone",
+	"prone": "You have fallen to the ground, possibly because you have run out of Wounds, you’ve tripped, or because you’ve been hit by something rather large. On your turn, your Move can only be used to stand up or crawl at half your Movement in yards. You suﬀer a –20 penalty to all Tests involving movement of any kind, and any opponent trying to strike you in Melee Combat gains +20 to hit you. However, you are typically considered one range band further away for Ranged attacks.<br><br>Unlike most other conditions, Prone does not stack — you are either Prone, or you are not. You lose the Prone Condition when you stand up.",
 	"stunned": "WFRP4E.Conditions.Stunned",
 	"surprised": "WFRP4E.Conditions.Surprised",
 	"unconscious": "WFRP4E.Conditions.Unconscious",

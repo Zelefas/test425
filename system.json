@@ -1,8 +1,8 @@
 {
   "name": "wfrp4e",
-  "title": "Warhammer Fantasy Roleplay 4th Edition",
+  "title": "Warhammer Fantasy Roleplay 4th Edition (HOMEBREW)",
   "description": "A comprehensive system for running grim and perilious games of Warhammer Fantasy Roleplay in the Foundry VTT environment.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "CatoThe1stElder, Moo Man",
   "scripts": [
     "./scripts/config-wfrp4e.js",
@@ -179,7 +179,7 @@
   "minimumCoreVersion" : "0.5.1",
   "templateVersion":2,
   "socket": true,
-  "manifest" :  "https://raw.githubusercontent.com/CatoThe1stElder/WFRP-4th-Edition-FoundryVTT/stable/system.json",
-  "download" :  "https://github.com/CatoThe1stElder/WFRP-4th-Edition-FoundryVTT/archive/stable.zip",
-  "url" : "https://github.com/CatoThe1stElder/WFRP-4th-Edition-FoundryVTT"
+  "manifest" :  "https://raw.githubusercontent.com/moo-man/WFRP-4th-Homebrew-FoundryVTT/stable/system.json",
+  "download" :  "https://github.com/CatoThe1stElder/WFRP-4th-Homebrew-FoundryVTT/archive/stable.zip",
+  "url" : "https://github.com/CatoThe1stElder/WFRP-4th-Homebrew-FoundryVTT"
 }

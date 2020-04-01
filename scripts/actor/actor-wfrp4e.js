@@ -187,6 +187,7 @@ class ActorWfrp4e extends Actor {
     let title = char.label + " " + game.i18n.localize("Test");
     let testData = {
       target : char.value,
+      triggers : this.data.flags.triggers,
       hitLocation : false,
       extra : {
         size : this.data.data.details.size.value
@@ -255,6 +256,7 @@ class ActorWfrp4e extends Actor {
     let title = skill.name + " " + game.i18n.localize("Test");
     let testData = {
       hitLocation : false,
+      triggers : this.data.flags.triggers,
       income : income,
       extra : {
         size : this.data.data.details.size.value
@@ -340,7 +342,7 @@ class ActorWfrp4e extends Actor {
   setupWeapon(weapon, event = {}) {
     let skillCharList = []; // This array is for the different options available to roll the test (Skills and characteristics)
     let slBonus = 0   // Used when wielding Defensive weapons
-    let modifier = 0; // Used when atatcking with Accurate weapons
+    let modifier = event.modifier || 0; // Used when atatcking with Accurate weapons
     let successBonus = 0;
     let title = game.i18n.localize("WeaponTest") + " - " + weapon.name;
 
@@ -350,6 +352,7 @@ class ActorWfrp4e extends Actor {
 
     let testData = {
       target : 0,
+      triggers : this.data.flags.triggers,
       hitLocation : true,
       extra : { // Store this extra weapon/ammo data for later use
         weapon : wep,
@@ -597,12 +600,13 @@ class ActorWfrp4e extends Actor {
     let defaultSelection = castSkills.findIndex(i => i.name.toLowerCase() == "language (magick)")
 
     // Whether the actor has Instinctive Diction is important in the test rolling logic
-    let instinctiveDiction = (this.data.flags.talentTests.findIndex(x=>x.talentName.toLowerCase() == "instinctive diction") > -1) // instinctive diction boolean
+    let instinctiveDiction = this.data.flags.talentTests.find(x=>x.talentName.toLowerCase() == "instinctive diction") // instinctive diction boolean
 
     // Prepare the spell to have the complete data object, including damage values, range values, CN, etc.
     let preparedSpell = this.prepareSpellOrPrayer(spell);
     let testData = {
       target : 0,
+      triggers : this.data.flags.triggers,
       extra : { // Store this data to be used by the test logic
         spell : preparedSpell,
         malignantInfluence : false,
@@ -625,9 +629,9 @@ class ActorWfrp4e extends Actor {
         hitLocation : testData.hitLocation,
         malignantInfluence : testData.malignantInfluence,
         talents : this.data.flags.talentTests,
-        advantage : this.data.data.status.advantage.value || 0,
         defaultSelection : defaultSelection,
-        castSkills : castSkills
+        castSkills : castSkills,
+        advantage : "-"
       },
       callback : (html, roll) => {
         // When dialog confirmed, fill testData dialog information
@@ -723,16 +727,18 @@ class ActorWfrp4e extends Actor {
       defaultSelection = channellSkills.indexOf(channellSkills.find(x => x.name.includes("Channelling")))
 
     // Whether the actor has Aethyric Attunement is important in the test rolling logic
-    let aethyricAttunement = (this.data.flags.talentTests.findIndex(x=>x.talentName.toLowerCase() == "aethyric attunement") > -1) // aethyric attunement boolean
+    let aethyricAttunement = this.data.flags.talentTests.find(x=>x.talentName.toLowerCase() == "aethyric attunement") // aethyric attunement boolean
 
     let testData = {
       target : 0,
+      triggers : this.data.flags.triggers,
       extra : { // Store data to be used by the test logic
         spell : this.prepareSpellOrPrayer(spell),
         malignantInfluence : false,
         ingredient : false,
         AA : aethyricAttunement,
-        size : this.data.data.details.size.value
+        size : this.data.data.details.size.value,
+        advantage : this.data.data.status.advantage.value || 0
       }
     };
 
@@ -746,7 +752,7 @@ class ActorWfrp4e extends Actor {
         channellSkills : channellSkills,
         defaultSelection: defaultSelection,
         talents : this.data.flags.talentTests,
-        advantage : "N/A"
+        advantage : this.data.data.status.advantage.value
       },
       callback : (html, roll) => {
           // When dialog confirmed, fill testData dialog information
@@ -835,6 +841,7 @@ class ActorWfrp4e extends Actor {
     let testData = { // Store this data to be used in the test logic
       target : 0,
       hitLocation : false,
+      triggers : this.data.flags.triggers,
       extra : {
         prayer : preparedPrayer,
         size : this.data.data.details.size.value,
@@ -926,6 +933,7 @@ class ActorWfrp4e extends Actor {
     let title =   WFRP4E.characteristics[trait.data.rollable.rollCharacteristic] + ` ${game.i18n.localize("Test")} - ` + trait.name;
     let testData = {
       hitLocation : false,
+      triggers : this.data.flags.triggers,
       extra : { // Store this trait data for later use
         trait : trait,
         size : this.data.data.details.size.value
@@ -1168,7 +1176,7 @@ class ActorWfrp4e extends Actor {
     if (game.user.targets.size)
         cardOptions.title += ` - ${game.i18n.localize("Opposed")}`
 
-    let result = DiceWFRP.rollWeaponTest(testData);
+    let result = DiceWFRP.rollWeaponTest(testData, testData.charging);
     result.postFunction = "weaponOverride";
 
     await DiceWFRP.renderRollCard(cardOptions, result, rerenderMessage).then(msg => {
@@ -1277,6 +1285,18 @@ class ActorWfrp4e extends Actor {
 
         if (testData.extra.trait.data.rollable.bonusCharacteristic) // Add the bonus characteristic (probably strength)
           testData.extra.damage += Number(WFRP_Utility.getSpeaker(cardOptions.speaker).data.data.characteristics[testData.extra.trait.data.rollable.bonusCharacteristic].bonus) || 0;
+
+        //testData.extra.trait.data
+        switch (testData.extra.size)
+        {
+          case "mnst" : 
+          testData.extra.damage += Number(WFRP_Utility.getSpeaker(cardOptions.speaker).data.data.characteristics[testData.extra.trait.data.rollable.bonusCharacteristic].bonus) || 0;
+          case "enor" : 
+          testData.extra.damage += Number(WFRP_Utility.getSpeaker(cardOptions.speaker).data.data.characteristics[testData.extra.trait.data.rollable.bonusCharacteristic].bonus) || 0;
+          case "lrg" : 
+          testData.extra.damage += Number(WFRP_Utility.getSpeaker(cardOptions.speaker).data.data.characteristics[testData.extra.trait.data.rollable.bonusCharacteristic].bonus) || 0;
+          testData.extra.traitHack = true;
+        }
       }
     }
     catch (error)
@@ -1637,6 +1657,7 @@ class ActorWfrp4e extends Actor {
     const mutations = [];
     const diseases = [];
     const criticals = [];
+    const triggers = {};
     let penalties = {
       [game.i18n.localize("Armour")]: {
         value: ""
@@ -1980,6 +2001,10 @@ class ActorWfrp4e extends Actor {
             }
             i.name = i.name + " (" + i.data.specification.value + ")";
           }
+          if (i.data.trigger && i.data.trigger.isTrigger)
+          {
+            triggers[i.name] = i.data.trigger.value;
+          }
           traits.push(i);
         } 
 
@@ -2195,6 +2220,8 @@ class ActorWfrp4e extends Actor {
     else
       enc["notEncumbered"] = true;
 
+    this.data.flags.triggers = triggers
+
     // Return all processed objects
     let preparedData = {
       inventory: inventory,
@@ -2366,6 +2393,25 @@ class ActorWfrp4e extends Actor {
         weapon.data["weaponDamage"] = 0;
     }
 
+    switch (this.data.data.details.size.value)
+    {
+      case "lrg" : 
+        weapon.data.damage.value += this.data.data.characteristics.s.bonus
+        if (!weapon.properties.includes("Hack"))
+          weapon.properties.push("Hack")
+        break;
+        case "enor" : 
+        weapon.data.damage.value += 2 * this.data.data.characteristics.s.bonus
+        if (!weapon.properties.includes("Hack"))
+          weapon.properties.push("Hack")
+        break;
+        case "mnst" : 
+        weapon.data.damage.value += 3 * this.data.data.characteristics.s.bonus
+        if (!weapon.properties.includes("Hack"))
+          weapon.properties.push("Hack")
+        break;
+    }
+
     // If the weapon uses ammo...
     if (weapon.data.ammunitionGroup.value != "none") 
     {
@@ -2398,8 +2444,57 @@ class ActorWfrp4e extends Actor {
 
     if (weapon.properties.special)
       weapon.properties.special = weapon.data.special.value;
+
+    weapon.rangeBands = this.calculateRangeBands(weapon)
     return weapon;
   }
+
+  calculateRangeBands(weapon)
+  {
+    let range = weapon.data.range.value
+    if (!range)
+      return;
+    let rangeBands = duplicate(WFRP4E.rangeBands)
+ 
+    rangeBands["pointBlank"] =  {modifier : 0, start : 0, end: Math.ceil(range / 10)}
+    rangeBands["shortRange"] =  {modifier : 0, start : (Math.ceil(range / 10) + 1), end: Math.ceil(range / 2)}
+    rangeBands["normal"] =      {modifier : 0, start : Math.ceil(range / 2) + 1, end: Math.ceil(range)}
+    rangeBands["longRange"] =   {modifier : 0, start : range + 1, end: range * 1.5}
+    rangeBands["extreme"] =     {modifier : 0, start : range *1.5 + 1, end: range * 2}
+
+    if (!weapon.data.optimal)
+      weapon.data.optimal = {value : "normal"}
+
+    rangeBands[weapon.data.optimal.value].modifier = 20
+    let accurate = weapon.properties.qualities.includes("Accurate")
+    let pistol = weapon.properties.qualities.includes("Pistol")
+
+    for (let band in rangeBands)
+    {
+      let diff = Math.abs(WFRP4E.bandNum[weapon.data.optimal.value] - WFRP4E.bandNum[band])
+      if (diff)
+      {
+        rangeBands[band].modifier = -20 * (diff - 1);
+      }
+    }
+
+    for (let band in rangeBands)
+    {
+      let diff = WFRP4E.bandNum[weapon.data.optimal.value] - WFRP4E.bandNum[band]
+      if (diff > 0 && pistol)
+      {
+        rangeBands[band].modifier = 0;
+      }
+      if (diff < 0 && accurate)
+      {
+        rangeBands[band].modifier += 10;
+      }
+    }
+
+    console.log(rangeBands);
+    return rangeBands;
+  }
+
 
   /**
    * Prepares an armour Item.
@@ -2900,6 +2995,8 @@ class ActorWfrp4e extends Actor {
     let impale = false;
     // If weapon has Penetrating
     let penetrating = false;
+    let penetratingValue = 0;
+    let critModifier = 0;
 
     if (applyAP)
     {
@@ -2911,11 +3008,15 @@ class ActorWfrp4e extends Actor {
       {
         // Determine its qualities/flaws to be used for damage calculation
         weaponProperties = opposeData.attackerTestResult.weapon.properties;
-        penetrating = weaponProperties.qualities.includes("Penetrating")
+        penetrating = weaponProperties.qualities.find(q => q.includes("Penetrating")) || ""
+        penetratingValue = parseInt(penetrating.split(" ")[1]) || 0
+
         undamaging = weaponProperties.flaws.includes("Undamaging")
         hack = weaponProperties.qualities.includes("Hack")
         impale = weaponProperties.qualities.includes("Impale")
       }
+      if (opposeData.attackerTestResult.trait)
+        hack = opposeData.attackerTestResult.traitHack ? true : false
       // see if armor flaws should be triggered
       let ignorePartial = opposeData.attackerTestResult.roll % 2 == 0 || opposeData.attackerTestResult.extra.critical
       let ignoreWeakpoints = (opposeData.attackerTestResult.roll % 2 == 0 || opposeData.attackerTestResult.extra.critical)
@@ -2932,10 +3033,6 @@ class ActorWfrp4e extends Actor {
         {
           AP.ignored += layer.value;
         }
-        else if (penetrating) // If penetrating - ignore 1 or all armor depending on material
-        {
-          AP.ignored += layer.metal ? 1 : layer.value
-        }
         if (opposeData.attackerTestResult.roll % 2 != 0 && layer.impenetrable)
         {
           impenetrable = true;
@@ -2943,6 +3040,7 @@ class ActorWfrp4e extends Actor {
         }
       }
 
+      AP.ignored += penetratingValue
       // AP.used is the actual amount of AP considered
       AP.used = AP.value - AP.ignored
       AP.used = AP.used < 0 ? 0 : AP.used;           // AP minimum 0
@@ -2958,7 +3056,7 @@ class ActorWfrp4e extends Actor {
       let shieldAP = 0;
       if (opposeData.defenderTestResult.weapon)
       {
-        if (opposeData.defenderTestResult.weapon.properties.qualities.find(q => q.includes("Shield")))
+        if (opposeData.defenderTestResult.weapon.properties.qualities.find(q => q.includes("Shield")) && opposeData.defenderTestResult.roll <= opposeData.defenderTestResult.target)
           shieldAP = Number(opposeData.defenderTestResult.weapon.properties.qualities.find(q => q.includes("Shield")).split(" ")[1])
       }
 
@@ -2972,6 +3070,7 @@ class ActorWfrp4e extends Actor {
 
       // Reduce damage done by AP
       totalWoundLoss -= (AP.used + shieldAP)
+      critModifier -= (AP.used + shieldAP) * 10
     }
 
     // Reduce damage by TB
@@ -2996,10 +3095,15 @@ class ActorWfrp4e extends Actor {
       totalWoundLoss = totalWoundLoss <= 0 ? 0 : totalWoundLoss
 
     newWounds -= totalWoundLoss
+    if (newWounds < 0)
+    {
+      critModifier = (Math.abs(newWounds) - actor.data.data.characteristics.t.bonus) * 10
+    }
 
+    critModifier = critModifier < 0 ? critModifier : `+${critModifier}` 
     // If damage taken reduces wounds to 0, show Critical
-    if (newWounds <= 0 && !impenetrable)
-      updateMsg += `<br><a class ="table-click critical-roll" data-table = "crit${opposeData.hitloc.value}" ><i class='fas fa-list'></i> Critical</a>`
+    if (newWounds < 0 && !impenetrable)
+      updateMsg += `<br><a class ="table-click critical-roll" data-modifier=${critModifier} data-table = "crit${opposeData.hitloc.value}" ><i class='fas fa-list'></i> Critical (${critModifier})</a>`
 
     else if (impenetrable)
       updateMsg += `<br>Impenetrable - ${game.i18n.localize("CHAT.CriticalsNullified")}`

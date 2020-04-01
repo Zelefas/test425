@@ -39,9 +39,9 @@ class DiceWFRP
     {
       testDifficulty: dialogOptions.data.testDifficulty || "challenging",
       difficultyLabels: WFRP4E.difficultyLabels,
-      testModifier: (dialogOptions.data.modifier || 0) + dialogOptions.data.advantage * 10 || 0,
+      testModifier: dialogOptions.data.modifier || 0,
       slBonus: dialogOptions.data.slBonus || 0,
-      successBonus: dialogOptions.data.successBonus || 0,
+      successBonus: (dialogOptions.data.successBonus || 0) + (parseInt(dialogOptions.data.advantage) || 0),
     });
     mergeObject(cardOptions,
     {
@@ -227,14 +227,22 @@ class DiceWFRP
 
     mergeObject(rollResults, testData.extra)
 
+    rollResults.other = []; // Container for miscellaneous data that can be freely added onto
+
+    let ones = roll.total.toString().split("").pop()
+    let triggered = [];
+    for (let trigger in testData.triggers)
+    {
+      if(Number(ones) >= Number(testData.triggers[trigger]))
+        triggered.push(trigger)
+    }
+    rollResults.triggered = triggered.join(", ")
+
 
     if (testData.hitLocation)
     {
       if (testData.hitloc)
-        rollResults.hitloc = WFRP_Tables.rollTable("hitloc",
-        {
-          lookup: testData.hitloc
-        });
+        rollResults.hitloc = WFRP_Tables.rollTable("hitloc",{lookup: testData.hitloc});
       else
         rollResults.hitloc = WFRP_Tables.rollTable("hitloc");
 
@@ -283,11 +291,19 @@ class DiceWFRP
    * 
    * @param {Object} testData  Test info: weapon, target number, SL bonus, success bonus, etc
    */
-  static rollWeaponTest(testData)
+  static rollWeaponTest(testData, charging = false)
   {
 
     let testResults = this.rollTest(testData);
     let weapon = testResults.weapon;
+
+    if (charging)
+    {
+      weapon.properties.qualities = weapon.properties.qualities.map(q => {
+        if (q.includes("Momentum")) return q.substring(q.indexOf("(")+1, q.indexOf(")"))
+		    else return q
+      })
+    }
 
     testData.function = "rollWeaponTest"
 
@@ -306,7 +322,7 @@ class DiceWFRP
           testResults.extra.misfireDamage = eval(testResults.roll.toString().split('').pop() + weapon.data.damage.value)
         }
       }
-      if (weapon.data.weaponGroup.value == "Throwing")
+      if (weapon.data.weaponGroup.value == "Throwing" || weapon.data.weaponGroup.value == "Explosives")
         testResults.extra.scatter = "Scatter";
     }
     else
@@ -329,7 +345,7 @@ class DiceWFRP
     let damageToUse = testResults.SL; // Start out normally, with SL being the basis of damage
 
     let unitValue = Number(testResults.roll.toString().split("").pop())
-    unitValue = unitValue == 0 ? 10 : unitValue; // If unit value == 0, use 10
+      unitValue = unitValue == 0 ? 10 : unitValue; // If unit value == 0, use 10
 
     if (weapon.properties.qualities.includes("Damaging") && unitValue > Number(testResults.SL))
       damageToUse = unitValue; // If damaging, instead use the unit value if it's higher
@@ -340,10 +356,15 @@ class DiceWFRP
     if (weapon.properties.qualities.includes("Impact"))
       testResults.damage += unitValue;
 
-    // If Tiring, instead provide both normal damage and increased damage as an option - clickable to select which damage is used
-    if (weapon.properties.flaws.includes("Tiring") && (damageToUse != testResults.SL || weapon.properties.qualities.includes("Impact")))
+    if (weapon.rangedWeaponType)
     {
-      testResults.damage = `<a class = "damage-select">${eval(weapon.data.damage.value + testResults.SL)}</a> | <a class = "damage-select">${testResults.damage}</a>`;
+      testResults.damage -= ((testData.testModifier + testData.testDifficulty)/10)
+    }
+
+    // If Tiring, instead provide both normal damage and increased damage as an option - clickable to select which damage is used
+    if (weapon.properties.qualities.find(f => f.includes("Momentum")))
+    {
+      testResults.momentum = true;
     }
 
     return testResults;
@@ -366,15 +387,16 @@ class DiceWFRP
     let miscastCounter = 0;
     testData.function = "rollCastTest"
 
+    let CNtoUse = spell.data.cn.value
     // Partial channelling - reduce CN by SL so far
     if (game.settings.get("wfrp4e", "partialChannelling"))
     {
-      spell.data.cn.value -= spell.data.cn.SL;
+      CNtoUse -=  spell.data.cn.SL;
     }
     // Normal Channelling - if SL has reached CN, CN is considered 0
     else if (spell.data.cn.SL >= spell.data.cn.value)
     {
-      spell.data.cn.value = 0;
+      CNtoUse = 0;
     }
 
     // If malignant influence AND roll has an 8 in the ones digit, miscast
@@ -382,12 +404,13 @@ class DiceWFRP
       if (Number(testResults.roll.toString().split('').pop()) == 8)
         miscastCounter++;
 
+
     // Witchcraft automatically miscast
     if (spell.data.lore.value == "witchcraft")
       miscastCounter++;
 
     // slOver is the amount of SL over the CN achieved
-    let slOver = (Number(testResults.SL) - spell.data.cn.value)
+    let slOver = (Number(testResults.SL) - CNtoUse)
 
     // Test itself was failed
     if (testResults.description.includes("Failure"))
@@ -398,6 +421,9 @@ class DiceWFRP
       {
         testResults.extra.color_red = true;
         miscastCounter++;
+
+        if (testResults.roll == 100)
+          miscastCounter++  
       }
     }
     else if (slOver < 0) // Successful test, but unable to cast due to not enough SL
@@ -411,8 +437,9 @@ class DiceWFRP
         testResults.description = game.i18n.localize("ROLL.CastingSuccess")
         testResults.extra.critical = game.i18n.localize("ROLL.TotalPower")
 
-        if (!testData.extra.ID)
-          miscastCounter++;
+        if (testData.extra.ID)
+          testResults.extra.miscastMitigation = -testData.extra.ID.SL*10
+        miscastCounter++;
       }
     }
 
@@ -420,18 +447,24 @@ class DiceWFRP
     {
       testResults.description = game.i18n.localize("ROLL.CastingSuccess")
       let overcasts = Math.floor(slOver / 2);
+
       testResults.overcasts = overcasts;
+
 
       if (testResults.roll % 11 == 0)
       {
         testResults.extra.critical = game.i18n.localize("ROLL.CritCast")
         testResults.extra.color_green = true;
 
-        if (!testData.extra.ID)
-          miscastCounter++;
+        if (testData.extra.ID)
+          testResults.extra.miscastMitigation = -testData.extra.ID.SL*10
+        miscastCounter++;
       }
 
-    }
+	}
+	
+	if (miscastCounter > 3)
+		miscastCounter = 3
 
     // Use the number of miscasts to determine what miscast it becomes (null<miscast> is from ingredients)
     switch (miscastCounter)
@@ -452,7 +485,13 @@ class DiceWFRP
           testResults.extra.majormis = game.i18n.localize("ROLL.MajorMis")
         break;
       case 3:
-        testResults.extra.majormis = game.i18n.localize("ROLL.MajorMis")
+        if (testData.extra.ingredient)
+        {
+          testResults.extra.nullcatastrophicmis = "Catastrophic Miscast"
+          testResults.extra.majormis = "Major Miscast"
+        }
+        else
+          testResults.extra.catastrophicmis = "Catastrophic Miscast"
         break;
     }
 
@@ -460,8 +499,8 @@ class DiceWFRP
       miscastCounter--;
     if (miscastCounter < 0)
       miscastCounter = 0;
-    if (miscastCounter > 2)
-      miscastCounter = 2
+    if (miscastCounter > 3)
+      miscastCounter = 3
 
     // Calculate Damage if the spell has it specified and succeeded in casting
     try
@@ -496,17 +535,15 @@ class DiceWFRP
     let testResults = this.rollTest(testData);
     testData.function = "rollChannellTest"
 
-    let SL = testResults.SL;
+	if (spell.data.lore.value == "witchcraft")
+	miscastCounter++;
 
-    // If malignant influence AND roll has an 8 in the ones digit, miscast
-    if (testData.extra.malignantInfluence)
-      if (Number(testResults.roll.toString().split('').pop()) == 8)
-        miscastCounter++;
+	let SL = testResults.SL;
 
-    // Witchcraft automatically miscast
-    if (spell.data.lore.value == "witchcraft")
-      miscastCounter++;
-
+	if (testData.extra.malignantInfluence)
+	  if (Number(testResults.roll.toString().split('').pop()) == 8)
+		  miscastCounter++;
+	
     // Test itself was failed
     if (testResults.description.includes(game.i18n.localize("Failure")))
     {
@@ -520,6 +557,8 @@ class DiceWFRP
       {
         testResults.extra.color_red = true;
         miscastCounter += 2;
+        if (testResults.roll == 100)
+          miscastCounter++
       }
     }
     else // Successs - add SL to spell for further use
@@ -536,8 +575,9 @@ class DiceWFRP
         testResults.extra.color_green = true;
         spell.data.cn.SL = spell.data.cn.value;
         testResults.extra.criticalchannell = game.i18n.localize("ROLL.CritChannel")
-        if (!testData.extra.AA)
-          miscastCounter++;
+        if (testData.extra.AA)
+          testResults.extra.miscastMitigation = -testData.extra.AA.SL*10
+        miscastCounter++;
       }
     }
 
@@ -553,6 +593,10 @@ class DiceWFRP
       _id: spell._id,
       'data.cn.SL': spell.data.cn.SL
     });
+
+
+    if (miscastCounter > 3)
+		miscastCounter = 3
 
     // Use the number of miscasts to determine what miscast it becomes (null<miscast> is from ingredients)
     switch (miscastCounter)
@@ -573,16 +617,23 @@ class DiceWFRP
           testResults.extra.majormis = game.i18n.localize("ROLL.MajorMis")
         break;
       case 3:
-        testResults.extra.majormis = game.i18n.localize("ROLL.MajorMis")
+        if (testData.extra.ingredient)
+        {
+          testResults.extra.nullcatastrophicmis = "Catastrophic Miscast"
+          testResults.extra.majormis = "Major Miscast"
+        }
+        else
+          testResults.extra.catastrophicmis = "Catastrophic Miscast"
         break;
-	}
-	
+    }
+
     if (testData.extra.ingredient)
       miscastCounter--;
     if (miscastCounter < 0)
       miscastCounter = 0;
-    if (miscastCounter > 2)
-      miscastCounter = 2
+    if (miscastCounter > 3)
+      miscastCounter = 3
+
     return testResults;
   }
 
@@ -605,7 +656,6 @@ class DiceWFRP
     let SL = testResults.SL;
     let extensions = 0;
     let currentSin = actor.data.data.status.sin.value;
-    testData.extra.sin = currentSin;
 
     // Test itself failed
     if (testResults.description.includes(game.i18n.localize("Failure")))
@@ -622,6 +672,7 @@ class DiceWFRP
           testResults.extra.color_red = true;
 
         testResults.extra.wrath = game.i18n.localize("ROLL.Wrath")
+        testResults.extra.wrathModifier = `+${currentSin * 10}`
         currentSin--;
 
         if (currentSin < 0)
@@ -682,6 +733,8 @@ class DiceWFRP
     {
       testData.roll = testData.SL = null;
     }
+
+    testData.other = testData.other.join("<br>")
 
     let chatData = {
       title: chatOptions.title,
@@ -859,6 +912,34 @@ class DiceWFRP
       ActorWfrp4e[`${data.postData.postFunction}`](newTestData, chatOptions, message);
     })
 
+    html.on("click", ".charging", ev => {
+      let button = $(ev.currentTarget),
+      messageId = button.parents('.message').attr("data-message-id"),
+      message = game.messages.get(messageId);
+      let data = message.data.flags.data
+      let testData = data.preData;
+      testData.charging = true;
+
+      testData["roll"] = $(message.data.content).find(".card-content.test-data").attr("data-roll")
+      testData["hitloc"] = $(message.data.content).find(".card-content.test-data").attr("data-loc")
+
+
+      
+      let chatOptions = {
+        template: data.template,
+        rollMode: data.rollMode,
+        title: data.title,
+        speaker: message.data.speaker,
+        user: message.user.data._id
+      }
+      
+      if (["gmroll", "blindroll"].includes(chatOptions.rollMode)) chatOptions["whisper"] = ChatMessage.getWhisperIDs("GM");
+      if (chatOptions.rollMode === "blindroll") chatOptions["blind"] = true;
+
+      // Send message as third argument (rerenderMessage) so that the message will be updated instead of rendering a new one
+      ActorWfrp4e[`${data.postData.postFunction}`](testData, chatOptions, message);
+    })  
+
     // Change card to edit mode
     html.on('click', '.edit-toggle', ev =>
     {
@@ -977,10 +1058,7 @@ class DiceWFRP
       if (targeted)
       {
         let target = canvas.tokens.get(message.data.flags.unopposeData.targetSpeaker.token)
-        target.actor.update(
-        {
-          "-=flags.oppose": null
-        }) // After opposing, remove oppose
+        target.actor.update({"-=flags.oppose": null}) // After opposing, remove oppose
       }
       if (manual)
       {

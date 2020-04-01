@@ -148,7 +148,17 @@ class WFRP_Tables
     {
       // Cancel the roll if below 1 and not minimum one
       if (result.roll <= 0 && !options.minOne)
-        return `Roll: ${result.roll} - canceled`
+      {
+        let canceled =  `Roll: ${result.roll} - canceled`
+
+        if (table == "majormis") 
+          canceled +=`<br>Roll on the <a class ="table-click" data-modifier={{options.modifier}} data-table = "minormis"><i class="fas fa-list"></i> Minor Miscast Table (${options.modifier})</a><a>`
+        else if (table == "catastrophicmis")
+        {
+          canceled +=`<br>Roll on the <a class ="table-click" data-modifier={{options.modifier}} data-table = "major"><i class="fas fa-list"></i> Major Miscast Table (${options.modifier})</a><a>`
+        }
+        return canceled
+      }
     }
     catch
     {}
@@ -168,6 +178,7 @@ class WFRP_Tables
 
       case "minormis":
       case "majormis":
+      case "catastrophicmis":
       case "event":
       case "wrath":
       case "travel":

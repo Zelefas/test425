@@ -94,7 +94,7 @@
   }, {
     "name": "Mangled Jaw",
     "wounds": "5",
-    "description": "The blow almost removes your jaw as it utterly destroys your tongue, sending teeth flying in a shower of blood. Gain 4 Bleeding and 3 Stunned Conditions. Make a Very Hard (-30) Endurance Test or gain an Unconscious Condition. Suffer a Broken Bone (Major) injury and lose your tongue and <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> teeth — Amputation (Hard).",
+    "description": "The blow almost removes your jaw as it utterly destroys your tongue, sending teeth flying in a shower of blood. Gain 4 Bleeding and 3 Stunned Conditions. Make a very Hard (-40) Endurance Test or gain an Unconscious Condition. Suffer a Broken Bone (Major) injury and lose your tongue and <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> teeth — Amputation (Hard).",
     "range": [97, 99]
   }, {
     "name": "Decapitated",

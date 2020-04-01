@@ -59,7 +59,7 @@
     "range": [66, 70]
   }, {
     "name": "What Will You Sacrifice?",
-    "description": "You suffer 1d10+Sin points Wounds, ignoring Toughness Bonus and APs. Also attempt a Difficult (-10) Endurance Test. If you fail gain one Stunned Condition.",
+    "description": "You suffer 1d10+Sin points Wounds, ignoring Toughness Bonus and APs. Also attempt a Difficult (-20) Endurance Test. If you fail gain one Stunned Condition.",
     "range": [71, 75]
   }, {
     "name": "You Have Sinned Against Me",
@@ -67,7 +67,7 @@
     "range": [76, 80]
   }, {
     "name": "Purge the Flesh",
-    "description": "You suffer 2d10+Sin points Wounds, ignoring Toughness Bonus and APs. Also attempt a Hard (-20) Endurance Test. If you fail gain one Stunned Condition. If you fail with -4 SL or fewer, gain an Unconscious Condition that lasts a minimum of 1d10 Rounds.",
+    "description": "You suffer 2d10+Sin points Wounds, ignoring Toughness Bonus and APs. Also attempt a Hard(-30) Endurance Test. If you fail gain one Stunned Condition. If you fail with -4 SL or fewer, gain an Unconscious Condition that lasts a minimum of 1d10 Rounds.",
     "range": [81, 87]
   }, {
     "name": "Daemonic Interference",
@@ -111,7 +111,7 @@
     "range": [131, 135]
   }, {
     "name": "Excommunication",
-    "description": "You lose the Invoke and Bless Talents until you perform 2 Penances; the first Penance returns the Bless Talent, and the second returns the Invoke Talent. All cultists of your god are automatically aware of your circumstance; all Tests to interact with them are automatically Very Hard (-30), and may not be positively modified above this.",
+    "description": "You lose the Invoke and Bless Talents until you perform 2 Penances; the first Penance returns the Bless Talent, and the second returns the Invoke Talent. All cultists of your god are automatically aware of your circumstance; all Tests to interact with them are automatically very Hard (-40), and may not be positively modified above this.",
     "range": [136, 140]
   }, {
     "name": "Prove Your Worth",
@@ -119,7 +119,7 @@
     "range": [141, 145]
   }, {
     "name": "I Cast You Out",
-    "description": "You are abandoned by your god. You permanently lose the Bless and Invoke Talents, and lose all Pray Advances. Further, all cultists of your god are automatically aware of your circumstance; all Tests to interact with them are automatically Very Hard (-30), and may not be positively modified above this.",
+    "description": "You are abandoned by your god. You permanently lose the Bless and Invoke Talents, and lose all Pray Advances. Further, all cultists of your god are automatically aware of your circumstance; all Tests to interact with them are automatically very Hard (-40), and may not be positively modified above this.",
     "range": [146, 150]
   }, {
     "name": "Called to Account",

@@ -1,85 +1,106 @@
 {
   "name": "Major Miscast Table",
   "die": "1d100",
-  "rows": [{
-    "name": "Ghostly Voices",
-    "description": "Everyone within Willpower yards hears darkly seductive whispering of voices emanating from the Realm of Chaos. All sentient creatures must pass an Average (+0) Cool Test or gain 1 Corruption point.",
-    "range": [1, 5]
-  }, {
-    "name": "Hexeyes",
-    "description": "Your eyes turn an unnatural colour associated with your Lore for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours. While your eyes are discoloured, you have 1 Blinded Condition that cannot be resolved by any means.",
-    "range": [6, 10]
-  }, {
-    "name": "Aethyric Shock",
-    "description": "You suffer <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> wounds, ignoring your Toughness Bonus and Armour Points. Pass an Average (+20) Endurance Test, or also gain a Stunned Condition.",
-    "range": [11, 15]
-  }, {
-    "name": "Death Walker",
-    "description": "Your footsteps leave death in their wake. For the next <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours, any plant life near you withers and dies.",
-    "range": [16, 20]
-  }, {
-    "name": "Intestinal Rebellion",
-    "description": "Your bowels move uncontrollably, and you soil yourself. Gain 1 Fatigued Condition, which cannot be removed until you can change your clothes and clean yourself up.",
-    "range": [21, 25]
-  }, {
-    "name": "Soulfire",
-    "description": "Gain an Ablaze Condition, as you are wreathed in unholy flames with a colour associated with your Lore.",
-    "range": [26, 30]
-  }, {
-    "name": "Speak in Tongues",
-    "description": "You gabble unintelligibly for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> rounds. During this time, you cannot communicate verbally, or make any Casting Tests, although you may otherwise act normally.",
-    "range": [31, 35]
-  }, {
-    "name": "Swarmed",
-    "description": "You are engaged by a swarm of aethyric Rats, Giant Spiders, Snakes, or similar (GM's choice). Use the standard profiles for the relevant creature type, adding the Swarm Creature Trait. After <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> rounds, if not yet destroyed, the swarm retreats.",
-    "range": [36, 40]
-  }, {
-    "name": "Ragdoll",
-    "description": "You are flung <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> yards through the air in a random direction, taking <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> wounds on landing, ignoring Armour Points, and receiving the Prone Condition.",
-    "range": [41, 45]
-  }, {
-    "name": "Limb Frozen",
-    "description": "One limb (randomly determined) is frozen in place for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours. The limb is useless, as if it had been Amputated.",
-    "range": [46, 50]
-  }, {
-    "name": "Darkling Sight",
-    "description": "You lose the benefit of the Second Sight Talent for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours. Channelling Tests also suffer a penalty of -20 for the duration.",
-    "range": [51, 55]
-  }, {
-    "name": "Chaotic Foresight",
-    "description": "Gain a bonus pool of <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> Fortune points (this may take you beyond your natural limit). Every time you spend one of these points, gain 1 Corruption point. Any of these points remaining at the end of the session are lost.",
-    "range": [56, 60]
-  }, {
-    "name": "Levititation",
-    "description": "You are borne aloft on the Winds of Magic, floating <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> yards above the ground for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> minutes. Other characters may forcibly move you, and you may move using spells, wings or similar, but will continually return to your levitating position if otherwise left alone. Refer to the Falling rules (see page 166) for what happens when Levitation ends.",
-    "range": [61, 65]
-  }, {
-    "name": "Regurgitation",
-    "description": "You spew uncontrollably, throwing up far more foul-smelling vomitus than your body can possibly contain. Gain the Stunned Condition, which lasts for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> Rounds.",
-    "range": [66, 70]
-  }, {
-    "name": "Chaos Quake",
-    "description": "All creatures within <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a>0 yards must pass an Average (+0) Athletics Test or gain the Prone Condition.",
-    "range": [71, 75]
-  }, {
-    "name": "Traitor's Heart",
-    "description": "The Dark Gods entice you to commit horrendous perfidy. Should you attack or otherwise betray an ally to the full extent of your capabilities, regain all Fortune points. If you cause another character to lose a Fate Point, gain +1 Fate Point.",
-    "range": [76, 80]
-  }, {
-    "name": "Foul Enfeeblement",
-    "description": "Gain 1 Corruption point, the Prone Condition, and a Fatigued Condition",
-    "range": [81, 85]
-  }, {
-    "name": "Hellish Stench",
-    "description": "You now smell really bad! You gain the Distracting Creature Trait (see page 339), and probably the enmity of anyone with a sense of smell. This lasts for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours.",
-    "range": [86, 90]
-  }, {
-    "name": "Power Drain",
-    "description": "You are unable to use the Talent used to cast the spell (usually Arcane Magic , though it could be Chaos Magic , or a similar Talent), for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> minutes.",
-    "range": [91, 95]
-  }, {
-    "name": "Aethyric Feedback",
-    "description": "Everyone within a number of yards equal to your Willpower Bonus — friend and foe alike — suffers <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> wounds, ignoring Toughness Bonus and Armour Points, and receives the Prone Condition. If there are no targets in range, the magic has nowhere to vent, so your head explodes, killing you instantly.",
-    "range": [96, 100]
-  }]
+  "rows": [
+    {
+      "name": "Ghostly Voices",
+      "description": "Daemonic darkly seductive voices whisper within Willpower yards; everyone who hears them must pass a Challenging(+0) Cool Test or gain 1 Corruption point.",
+      "range": [1,5]
+    },
+    {
+      "name": "Mindnumb",
+      "description": "Uncontrolled magic partially burns out your casting ability. Your skill advances in Language(Magick) and Channeling are halved for the next 24 hours.",
+      "range": [6,10]
+    },
+    {
+      "name": "Aethyric Shock",
+      "description": "You suffer <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> wounds ignoring Toughness Bonus or Armour: Every nail on your body blackens and wrenches free, the energies of your Wind scour you, your blood momentarily boils inside your body, etc. Pass an Average(+20) Endurance Test or gain a Stunned condition.",
+      "range": [11,15]
+    },
+    {
+      "name": "Following Winds",
+      "description": "Your Wind follows you for the next <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours. This is noticeable and difficult to explain to any suspicious bystanders. Shyish might cause plant life nearby you to wither and die, Aqshy the eruption of small fires, etc.",
+      "range": [16,20]
+    },
+    {
+      "name": "Aethyric Attack",
+      "description": "You suffer 1 Critical Wound to a random hit location as uncontrolled magical energies ravage your form.",
+      "range": [21,25]
+    },
+    {
+      "name": "Soulfire",
+      "description": "Gain 1d5 Ablaze conditions as you are wreathed in unholy flames.",
+      "range": [26,30]
+    },
+    {
+      "name": "Voice of Madness",
+      "description": "You gabble unintelligibly for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> rounds. During this time, you cannot communicate verbally or make Casting tests.",
+      "range": [31,35]
+    },
+    {
+      "name": "Chaotic Winds",
+      "description": "Chaos blows through your spell ingredients. Any spell cast using them suffers from Malignant Influence.",
+      "range": [36,40]
+    },
+    {
+      "name": "Ragdoll",
+      "description": "You levitate briefly before being flung <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> yards through the air in a random direction, taking <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> wounds ignoring Armour and falling Prone on landing.",
+      "range": [41,45]
+    },
+    {
+      "name": "Limbfrozen",
+      "description": "One randomly determined limb is frozen in place for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours. It is useless as if amputated.",
+      "range": [46,50]
+    },
+    {
+      "name": "Craven Familiar",
+      "description": "A lesser daemon, such as an Imp, appears from the Aethyr, beckoned by your flawed casting.",
+      "range": [51,55]
+    },
+    {
+      "name": "Chaotic Foresight",
+      "description": "The Winds bring dark visions of the future. You gain a pool of <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> temporary Fortune points. Every time you spend one of these points, gain 1 Corruption point. These points last until the end of the session.",
+      "range": [56,60]
+    },
+    {
+      "name": "Wracked",
+      "description": "You are overwhelmed with pain, taking 1 Stunned condition. Make a Very Hard(-30) Endurance test or fall Prone.",
+      "range": [61,65]
+    },
+    {
+      "name": "Power Drain",
+      "description": "Your power surges like a breaking dam, bleeding fully into the Winds. You lose your ability to cast magic for the next <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> minutes. Your lost energy causes minor effects of Witchery as it travels.",
+      "range": [66,70]
+    },
+    {
+      "name": "Suffocation",
+      "description": "You immediately begin to Suffocate as your throat swells, is suddenly clogged with blood or pus, or your tongue momentarily stretches back down your throat, etc.",
+      "range": [71,75]
+    },
+    {
+      "name": "Aethyric Feedback",
+      "description": "Magic surges around you, causing fearsome stigmata. Everyone within a number of yards equal to your Willpower suffers 1 Wound and must make a Challenging(+0) Cool Test or take a Broken Condition. If there are no other creatures within this distance, you immediately suffer 2d10 Wounds.",
+      "range": [76,80]
+    },
+    {
+      "name": "Foul Enfeeblement",
+      "description": "The Winds carry a strand of Chaos, choking your soul and bringing you to your knees. Gain 1 Corruption point, 1 Fatigued Condition, and the Prone condition.",
+      "range": [81,85]
+    },
+    {
+      "name": "Double Trouble",
+      "description": "The Winds whisk away your spell",
+      "range": [86,90]
+    },
+    {
+      "name": "Storm of Chaos",
+      "description": "Roll on the Minor Miscast table. You and the <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> nearest creatures suffer this effect.",
+      "range": [91,95]
+    },
+    {
+      "name": "Trick of Fate",
+      "description": "Roll on the Catastrophic table instead.",
+      "range": [96,100]
+    }
+  ]
 }

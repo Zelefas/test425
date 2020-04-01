@@ -59,7 +59,7 @@
     "range": [49, 52]
   }, {
     "name": "Malicious Malady",
-    "description": "The Bloody Flux sweeps through town. Make an Easy (+40) Toughness Test. On a success, the Flux passes by. On a failure, you and the Washers Guild are soon to know each other very well. Contract the Bloody Flux see page 186.",
+    "description": "The Bloody Flux sweeps through town. Make an Easy (+30) Toughness Test. On a success, the Flux passes by. On a failure, you and the Washers Guild are soon to know each other very well. Contract the Bloody Flux see page 186.",
     "range": [53, 56]
   }, {
     "name": "Montrous Complications",
@@ -107,7 +107,7 @@
     "range": [83, 85]
   }, {
     "name": "Suspicion of Heresy",
-    "description": "You fall foul of a Witch Hunter who suspects you have been consorting with Mutants, Cultists, or worse on your socalled 'adventures'. It takes a Very Hard (-30) Charm Test to convince the hunter you are innocent. Failure to do this means you have earned an implacable nemesis who is certain to cause trouble in the future...",
+    "description": "You fall foul of a Witch Hunter who suspects you have been consorting with Mutants, Cultists, or worse on your socalled 'adventures'. It takes a very Hard (-40) Charm Test to convince the hunter you are innocent. Failure to do this means you have earned an implacable nemesis who is certain to cause trouble in the future...",
     "range": [86, 88]
   }, {
     "name": "Under Suspicion",

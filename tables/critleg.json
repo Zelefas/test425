@@ -54,7 +54,7 @@
   }, {
     "name": "Hacked Leg",
     "wounds": "3",
-    "description": "A cut bites down into the hip. Gain 1 Prone and 2 Bleeding Conditions, and suffer a Broken Bone (Minor) injury. Further, take a Hard (-20) Endurance Test or also gain a Stunned condition from the pain.",
+    "description": "A cut bites down into the hip. Gain 1 Prone and 2 Bleeding Conditions, and suffer a Broken Bone (Minor) injury. Further, take a Hard(-30) Endurance Test or also gain a Stunned condition from the pain.",
     "range": [61, 65]
   }, {
     "name": "Torn Thigh",
@@ -64,7 +64,7 @@
   }, {
     "name": "Ruptured Tendon",
     "wounds": "4",
-    "description": "Gain a Prone and Stunned Condition as one of your tendons tears badly. Pass a Hard (-20) Endurance Test or gain the Unconscious Condition. Your leg is useless. Suffer a Torn Muscle (Major) injury.",
+    "description": "Gain a Prone and Stunned Condition as one of your tendons tears badly. Pass a Hard(-30) Endurance Test or gain the Unconscious Condition. Your leg is useless. Suffer a Torn Muscle (Major) injury.",
     "range": [71, 75]
   }, {
     "name": "Carved Shin",
@@ -79,7 +79,7 @@
   }, {
     "name": "Dislocated Knee",
     "wounds": "4",
-    "description": "Your knee is wrenched out of its socket. Gain the Prone Condition. Pass a Hard (-20) Endurance Test, or gain the Stunned Condition, which is not removed until you receive Medical Attention. After this initial Medical Attention, an Extended Average (+20) Heal Test needing 6 SL is required to reset the knee at which point you regain its use. Movement is halved, and Tests made using this leg suffer a -10 penalty for d10 days.",
+    "description": "Your knee is wrenched out of its socket. Gain the Prone Condition. Pass a Hard(-30) Endurance Test, or gain the Stunned Condition, which is not removed until you receive Medical Attention. After this initial Medical Attention, an Extended Average (+20) Heal Test needing 6 SL is required to reset the knee at which point you regain its use. Movement is halved, and Tests made using this leg suffer a -10 penalty for d10 days.",
     "range": [86, 90]
   }, {
     "name": "Crushed Foot",

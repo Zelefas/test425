@@ -8,7 +8,7 @@
     "range": [1, 2]
   }, {
     "name": "Fitful Sleep",
-    "description": "You toss and turn, asleep but not resting. Gain 1 <a class='condition-chat'><i class='fas fa-user-injured'></i> Unconscious</a> for the next hour, and 1 <a class='condition-chat'><i class='fas fa-user-injured'></i> Fatigued</a> Condition for the next <b><a class='chat-roll'>1d10</a></b> hours.",
+    "description": "You toss and turn, asleep but not resting. Gain 1 <a class='condition-chat'><i class='fas fa-user-injured'></i> Unconscious</a> for the next hour, and 1 <a class='condition-chat'><i class='fas fa-user-injured'></i> Fatigued</a> Condition for the next <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours.",
     "range": [3, 5]
   }, {
     "name": "Confusion",
@@ -16,7 +16,7 @@
     "range": [6, 9]
   }, {
     "name": "Hallucinations",
-    "description": "You see strange and terrifying visions, and must make a Test against Terror  3 every 10 minutes for the next hour. You also gain +1 <a class='condition-chat'><i class='fas fa-user-injured'></i> Stunned</a> Condition for the next <b><a class='chat-roll'>1d10</a></b> hours",
+    "description": "You see strange and terrifying visions, and must make a Test against Terror  3 every 10 minutes for the next hour. You also gain +1 <a class='condition-chat'><i class='fas fa-user-injured'></i> Stunned</a> Condition for the next <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> hours",
     "range": [10, 10]
   }]
 }

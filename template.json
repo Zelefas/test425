@@ -402,7 +402,7 @@
       },
       "range": {
         "type": "String",
-        "label": "Range",
+        "label": "Optimal Range",
         "value": ""
       },
       "twohanded": {
@@ -802,6 +802,10 @@
         "value": "",
         "type": "String",
         "label": "Specification"
+      },
+      "trigger" : {
+        "isTrigger" : false,
+        "value" : 0
       }
     },
     "money": {

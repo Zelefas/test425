@@ -26,9 +26,11 @@
             <span><b>{{localize "Special"}}</b>: {{testData.weapon.properties.special}}</span>
         </div>
     {{/if}}
-   <!-- {{#if opposed}}
-    <div class ="card-buttons">
-        <button class = "oppose-button">Oppose</button>
+
+    {{#if testData.momentum}}
+    <div class="card-content charging">
+        <a><b>Charging?</b></a>
     </div>
-    {{/if}}-->
+    {{/if}}
+
 </div>

@@ -113,35 +113,9 @@ class OpposedWFRP
         // If Damage is a numerical value
         if (!isNaN(opposeResult.attackerTestResult.damage))
         {
-          // Calculate size damage multiplier 
-          let damageMultiplier = 1;
-          let sizeDiff = WFRP4E.actorSizeNums[opposeResult.attackerTestResult.size] - WFRP4E.actorSizeNums[opposeResult.defenderTestResult.size]
-          damageMultiplier = sizeDiff >= 2 ? sizeDiff : 1
-
-          // If the attacker is using a Trait0 to do damage, calculate damaging and impact if necessary
-          if (opposeResult.attackerTestResult.trait)
-          {
-            if (sizeDiff >= 1)
-            {
-              let SL = Number(opposeResult.attackerTestResult.SL)
-              let unitValue = Number(opposeResult.attackerTestResult.roll.toString().split("").pop())
-              if (unitValue == 0)
-                unitValue = 10;
-              let damageToAdd = unitValue - SL
-              if (damageToAdd > 0)
-                opposeResult.attackerTestResult.damage += damageToAdd
-
-            }
-            if (sizeDiff >= 2)
-            {
-              let unitValue = Number(opposeResult.attackerTestResult.roll.toString().split("").pop())
-              opposeResult.attackerTestResult.damage += unitValue
-            }
-          }
-
           opposeResult.damage = {
-            description: `<b>${game.i18n.localize("Damage")}</b>: ${(opposeResult.attackerTestResult.damage - defenderSL) * damageMultiplier}`,
-            value: (opposeResult.attackerTestResult.damage - defenderSL) * damageMultiplier
+            description: `<b>${game.i18n.localize("Damage")}</b>: ${(opposeResult.attackerTestResult.damage)}`,
+            value: (opposeResult.attackerTestResult.damage)
           };
         }
         // If attacker is using a weapon or trait but there wasn't a numerical damage value, output unknown

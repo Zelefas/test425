@@ -1309,6 +1309,11 @@ class ActorSheetWfrp4e extends ActorSheet {
     let propertyDescription = "<b>" + property + "</b>" + ": " + propertyDescr[propertyKey];
     if (propertyDescription.includes("(Rating)"))
       propertyDescription = propertyDescription.replace("(Rating)", property.split(" ")[1])
+
+    if (property.includes("Momentum"))
+    {
+      propertyDescription = WFRP_Utility.propertyText(property)
+    }
   
     // Toggle expansion 
     if (li.hasClass("expanded"))
@@ -1341,16 +1346,16 @@ class ActorSheetWfrp4e extends ActorSheet {
     let classes = $(event.currentTarget);
     let expansionText = "";
 
+    let rangeBands = this.actor.prepareWeaponCombat(duplicate(this.actor.getEmbeddedEntity("OwnedItem", "ldC9LeBBbS5Jb1Ra"))).rangeBands
+
     // Breakdown weapon range bands for easy reference (clickable, see below)
     if (classes.hasClass("weapon-range"))
     {
-      let range = parseInt(event.target.text);
-      expansionText =
-        `<a class="range-click" data-range="easy">0 yd - ${Math.ceil(range / 10)} yds: ${WFRP4E.rangeModifiers["Point Blank"]}</a><br>
-          <a class="range-click" data-range="average">${(Math.ceil(range / 10) + 1)} yds - ${Math.ceil(range / 2)} yds: ${WFRP4E.rangeModifiers["Short Range"]}</a><br>
-          <a class="range-click" data-range="challenging">${(Math.ceil(range / 2) + 1)} yds - ${range} yds: ${WFRP4E.rangeModifiers["Normal"]}</a><br>
-          <a class="range-click" data-range="difficult">${(range + 1)} yds - ${range * 2} yds: ${WFRP4E.rangeModifiers["Long Range"]}</a><br>
-          <a class="range-click" data-range="vhard">${(range * 2 + 1)} yds - ${range * 3} yds: ${WFRP4E.rangeModifiers["Extreme"]}</a><br>`;
+      expansionText ="";
+      for (let band in WFRP4E.rangeBands)
+      {
+        expansionText = expansionText.concat(`<a class="range-click" data-modifier=${rangeBands[band].modifier}>${rangeBands[band].start} yd - ${rangeBands[band].end} yds: ${WFRP4E.rangeBands[band]} (${rangeBands[band].modifier})</a><br>`)
+      }
     }
     // Expand the weapon's group description
     else if (classes.hasClass("weapon-group"))
@@ -1384,12 +1389,12 @@ class ActorSheetWfrp4e extends ActorSheet {
       // When a rangeband is clicked, start a test at that difficulty
       div.on("click", ".range-click", ev =>
       {
-        let difficulty = $(ev.currentTarget).attr("data-range")
+        let modifier = parseInt($(ev.currentTarget).attr("data-modifier"))
   
         let itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
         let weapon = duplicate(this.actor.getEmbeddedEntity("OwnedItem", itemId))
         if (weapon)
-          this.actor.setupWeapon(duplicate(weapon), {difficulty: difficulty});
+          this.actor.setupWeapon(duplicate(weapon), {modifier: modifier});
       })
   
     }

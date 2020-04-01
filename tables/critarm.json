@@ -43,7 +43,7 @@
   }, {
     "name": "Clean Break",
     "wounds": "3",
-    "description": "An audible crack resounds as the blow strikes your arm. Drop whatever was held in the associated hand and gain a Broken Bone (Minor) injury. Pass a Difficult (-10) Endurance Test or gain a Stunned Condition.",
+    "description": "An audible crack resounds as the blow strikes your arm. Drop whatever was held in the associated hand and gain a Broken Bone (Minor) injury. Pass a Difficult (-20) Endurance Test or gain a Stunned Condition.",
     "range": [51, 55]
   }, {
     "name": "Ruptered Ligament",
@@ -53,7 +53,7 @@
   }, {
     "name": "Deep Cut",
     "wounds": "3",
-    "description": "Gain 2 Bleeding Conditions as your arm is mangled. Gain 1 Stunned Condition and suffer a Torn Muscle (Minor) injury. Take a Hard (-20) Endurance Test or gain the Unconscious Condition.",
+    "description": "Gain 2 Bleeding Conditions as your arm is mangled. Gain 1 Stunned Condition and suffer a Torn Muscle (Minor) injury. Take a Hard(-30) Endurance Test or gain the Unconscious Condition.",
     "range": [61, 65]
   }, {
     "name": "Damaged Artery",
@@ -68,7 +68,7 @@
   }, {
     "name": "Dislocated Shoulder",
     "wounds": "4",
-    "description": "Your arm is wrenched out of its socket. Pass a Hard (-20) Endurance Test or gain the Stunned and Prone Condition. Drop whatever is held in that hand: the arm is useless and counts as lost (see Amputated Part). Gain 1 Stunned Condition until you receive Medical Attention. After this initial Medical Attention, an Extended Average (+20) Heal Test needing 6 SL is required to reset the arm, at which point you regain its use. Tests made using this arm suffer a -10 penalty for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> days.",
+    "description": "Your arm is wrenched out of its socket. Pass a Hard(-30) Endurance Test or gain the Stunned and Prone Condition. Drop whatever is held in that hand: the arm is useless and counts as lost (see Amputated Part). Gain 1 Stunned Condition until you receive Medical Attention. After this initial Medical Attention, an Extended Average (+20) Heal Test needing 6 SL is required to reset the arm, at which point you regain its use. Tests made using this arm suffer a -10 penalty for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> days.",
     "range": [76, 80]
   }, {
     "name": "Severed Finger",
@@ -88,12 +88,12 @@
   }, {
     "name": "Mangled Hand",
     "wounds": "5",
-    "description": "Your hand is left a mauled, bleeding mess. You lose your hand — Amputation (Hard). Gain 2 Bleeding Condition. Take a Hard (-20) Endurance Test or gain the Stunned and Prone Conditions.",
+    "description": "Your hand is left a mauled, bleeding mess. You lose your hand — Amputation (Hard). Gain 2 Bleeding Condition. Take a Hard(-30) Endurance Test or gain the Stunned and Prone Conditions.",
     "range": [94, 96]
   }, {
     "name": "Sliced Tendons",
     "wounds": "5",
-    "description": "Your tendons are cut by the blow, leaving your arm hanging useless — Amputation (Very Hard). Gain 3 Bleeding, 1 Prone, and 1 Stunned Condition. Pass a Hard (-20) Endurance Test or gain the Unconscious Condition.",
+    "description": "Your tendons are cut by the blow, leaving your arm hanging useless — Amputation (Very Hard). Gain 3 Bleeding, 1 Prone, and 1 Stunned Condition. Pass a Hard(-30) Endurance Test or gain the Unconscious Condition.",
     "range": [97, 99]
   }, {
     "name": "Brutal Dismemberment",

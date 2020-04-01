@@ -40,7 +40,7 @@
             - <a class ="table-click critical-roll" data-table = "crit{{testData.hitloc.result}}"><i class="fas fa-list"></i> {{testData.extra.critical}}</a>
             {{/if}}
             {{#if testData.extra.criticalchannell}}
-            - <span class ="critical-roll"> {{testData.extra.criticalchannell}}</span>
+            - <a class ="table-click critical-roll"> {{testData.extra.criticalchannell}}</a>
             {{/if}}
             {{#if testData.extra.fumble}}
             - <a class ="table-click fumble-roll" data-table = "oops"><i class="fas fa-list"></i> {{testData.extra.fumble}}</a>
@@ -54,15 +54,32 @@
             {{#if testData.extra.nullmajormis}}
             - <span style = "text-decoration: line-through">{{testData.extra.nullmajormis}}</span>
             {{/if}}
-            {{#if testData.extra.minormis}}
-            - <a class ="table-click fumble-roll" data-table = "minormis"><i class="fas fa-list"></i> {{testData.extra.minormis}}</a>
+            {{#if testData.extra.nullcatastrophicmis}}
+            - <span style = "text-decoration: line-through">{{testData.extra.nullcatastrophicmis}}</span>
             {{/if}}
-    
-            {{#if testData.extra.majormis}}
-            - <a class ="table-click fumble-roll" data-table = "majormis"><i class="fas fa-list"></i> {{testData.extra.majormis}}</a>
+            {{#if testData.extra.miscastMitigation}}
+                {{#if testData.extra.minormis}}
+                - <a class ="table-click fumble-roll" data-modifier={{testData.extra.miscastMitigation}} data-table = "minormis"><i class="fas fa-list"></i> {{testData.extra.minormis}} ({{testData.extra.miscastMitigation}})</a>
+                {{/if}}
+                {{#if testData.extra.majormis}}
+                - <a class ="table-click fumble-roll" data-modifier={{testData.extra.miscastMitigation}} data-table = "majormis"><i class="fas fa-list"></i> {{testData.extra.majormis}} ({{testData.extra.miscastMitigation}})</a>
+                {{/if}}
+                {{#if testData.extra.catastrophicmis}}
+                - <a class ="table-click fumble-roll" data-modifier={{testData.extra.miscastMitigation}} data-table = "catastrophicmis"><i class="fas fa-list"></i> {{testData.extra.catastrophicmis}} ({{testData.extra.miscastMitigation}})</a>
+                {{/if}}
+            {{else}}
+                {{#if testData.extra.minormis}}
+                - <a class ="table-click fumble-roll" data-table = "minormis"><i class="fas fa-list"></i> {{testData.extra.minormis}}</a>
+                {{/if}}
+                {{#if testData.extra.majormis}}
+                - <a class ="table-click fumble-roll" data-table = "majormis"><i class="fas fa-list"></i> {{testData.extra.majormis}}</a>
+                {{/if}}
+                {{#if testData.extra.catastrophicmis}}
+                - <a class ="table-click fumble-roll" data-table = "catastrophicmis"><i class="fas fa-list"></i> {{testData.extra.catastrophicmis}}</a>
+                {{/if}}
             {{/if}}
             {{#if testData.extra.wrath}}
-            - <a class ="table-click fumble-roll" data-sin = "{{testData.sin}}"data-table = "wrath"><i class="fas fa-list"></i> {{testData.extra.wrath}}</a>
+            - <a class ="table-click fumble-roll" data-modifier = "{{testData.extra.wrathModifier}}" data-table = "wrath"><i class="fas fa-list"></i> {{testData.extra.wrath}} ({{testData.extra.wrathModifier}})</a>
             {{/if}}
             {{#if testData.extra.misfire}}
             - <a class ="table-click fumble-roll" data-damage="{{testData.extra.misfireDamage}}" data-table = "misfire"><i class="fas fa-list"></i> {{testData.extra.misfire}}</a>
@@ -78,7 +95,13 @@
 
         {{#if testData.other}}
         <div class="card-content">
-            <b>{{localize "Other"}}</b>: {{testData.other}}
+            <b>{{localize "Other"}}</b>: {{{testData.other}}}
+        </div>
+        {{/if}}
+
+        {{#if testData.triggered}}
+        <div class="card-content hide-option">
+            <b>Triggered</b>: {{{testData.triggered}}}
         </div>
         {{/if}}
     
