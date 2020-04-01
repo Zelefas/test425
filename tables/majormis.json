@@ -29,7 +29,7 @@
     },
     {
       "name": "Soulfire",
-      "description": "Gain 1d5 Ablaze conditions as you are wreathed in unholy flames.",
+      "description": "Gain @Roll[1d5] Ablaze conditions as you are wreathed in unholy flames.",
       "range": [26,30]
     },
     {
