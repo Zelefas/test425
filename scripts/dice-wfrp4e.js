@@ -22,7 +22,7 @@ class DiceWFRP
   {
     dialogOptions,
     testData,
-    cardOptions
+    cardOptions,
   })
   {
     let rollMode = game.settings.get("core", "rollMode");
@@ -70,24 +70,35 @@ class DiceWFRP
     dialogOptions.data.rollMode = rollMode;
     dialogOptions.data.rollModes = CONFIG.rollModes;
 
-    // Render Test Dialog
-    renderTemplate(dialogOptions.template, dialogOptions.data).then(dlg =>
+    if (!testData.extra.options.bypass)
     {
-      new Dialog(
+      // Render Test Dialog
+      renderTemplate(dialogOptions.template, dialogOptions.data).then(dlg =>
       {
-        title: dialogOptions.title,
-        content: dlg,
-        buttons:
+        new Dialog(
         {
-          rollButton:
+          title: dialogOptions.title,
+          content: dlg,
+          buttons:
           {
-            label: game.i18n.localize("Roll"),
-            callback: html => dialogOptions.callback(html, roll)
-          }
-        },
-        default: "rollButton"
-      }).render(true);
-    });
+            rollButton:
+            {
+              label: game.i18n.localize("Roll"),
+              callback: html => dialogOptions.callback(html, roll)
+            }
+          },
+          default: "rollButton"
+        }).render(true);
+      });
+    }
+    else 
+    {
+      testData.testModifier = testData.extra.options.testModifier || testData.testModifier
+      testData.target = testData.target + testData.testModifier;
+      testData.slBonus = testData.extra.options.slBonus || testData.slBonus
+      testData.successBonus = testData.extra.options.successBonus || testData.successBonus
+      roll(testData, cardOptions)
+    }
   }
 
 
@@ -251,7 +262,7 @@ class DiceWFRP
 
     if (rollResults.options && rollResults.options.rest)
     {
-      rollResults.woundsHealed = parseInt(SL) + rollResults.options.tb;
+      rollResults.woundsHealed = Math.max(Math.trunc(SL) + rollResults.options.tb,0);
       rollResults.other.push(`${rollResults.woundsHealed} ${game.i18n.localize("Wounds Healed")}`)
     }
 
@@ -326,20 +337,23 @@ class DiceWFRP
     if (testResults.description.includes(game.i18n.localize("Failure")))
     {
       // Dangerous weapons fumble on any failed tesst including a 9
-      if (testResults.roll % 11 == 0 || testResults.roll == 100 || (weapon.properties.flaws.includes("Dangerous") && testResults.roll.toString().includes("9")))
+      if (testResults.roll % 11 == 0 || testResults.roll == 100 || (weapon.properties.flaws.includes(game.i18n.localize("PROPERTY.Dangerous")) && testResults.roll.toString().includes("9")))
       {
         testResults.extra.fumble = game.i18n.localize("Fumble")
         // Blackpowder/engineering/explosive weapons misfire on an even fumble
-        if ((weapon.data.weaponGroup.value == "Blackpowder" ||
-            weapon.data.weaponGroup.value == "Engineering" ||
-            weapon.data.weaponGroup.value == "Explosives") && testResults.roll % 2 == 0)
+        if ((weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Blackpowder") ||
+            weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Engineering") ||
+            weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Explosives")) && testResults.roll % 2 == 0)
         {
           testResults.extra.misfire = game.i18n.localize("Misfire")
-          testResults.extra.misfireDamage = eval(testResults.roll.toString().split('').pop() + weapon.data.damage.value)
+          testResults.extra.misfireDamage = eval(parseInt(testResults.roll.toString().split('').pop()) + weapon.data.damage.value)
         }
       }
-      if (weapon.data.weaponGroup.value == "Throwing" || weapon.data.weaponGroup.value == "Explosives")
-        testResults.extra.scatter = "Scatter";
+      if (weapon.properties.flaws.includes(game.i18n.localize("PROPERTY.Unreliable")))
+        testResults.SL--;
+
+      if (weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Throwing"))
+        testResults.extra.scatter = game.i18n.localize("Scatter");
     }
     else
     {
@@ -347,7 +361,7 @@ class DiceWFRP
         testResults.extra.critical = game.i18n.localize("Critical")
 
       // Impale weapons crit on 10s numbers
-      if (weapon.properties.qualities.includes("Impale") && testResults.roll % 10 == 0)
+      if (weapon.properties.qualities.includes(game.i18n.localize("PROPERTY.Impale")) && testResults.roll % 10 == 0)
         testResults.extra.critical = game.i18n.localize("Critical")
     }
 
@@ -363,13 +377,13 @@ class DiceWFRP
     let unitValue = Number(testResults.roll.toString().split("").pop())
       unitValue = unitValue == 0 ? 10 : unitValue; // If unit value == 0, use 10
 
-    if (weapon.properties.qualities.includes("Damaging") && unitValue > Number(testResults.SL))
+    if (weapon.properties.qualities.includes(game.i18n.localize("PROPERTY.Damaging")) && unitValue > Number(testResults.SL))
       damageToUse = unitValue; // If damaging, instead use the unit value if it's higher
 
     testResults.damage = eval(weapon.data.damage.value + damageToUse);
 
     // Add unit die value to damage if impact
-    if (weapon.properties.qualities.includes("Impact"))
+    if (weapon.properties.qualities.includes(game.i18n.localize("PROPERTY.Impact")))
       testResults.damage += unitValue;
 
     if (weapon.rangedWeaponType)
@@ -429,7 +443,7 @@ class DiceWFRP
     let slOver = (Number(testResults.SL) - CNtoUse)
 
     // Test itself was failed
-    if (testResults.description.includes("Failure"))
+    if (testResults.description.includes(game.i18n.localize("Failure")))
     {
       testResults.description = game.i18n.localize("ROLL.CastingFailed")
       // Miscast on fumble
@@ -580,34 +594,34 @@ class DiceWFRP
     else // Successs - add SL to spell for further use
     {
       testResults.description = game.i18n.localize("ROLL.ChannelSuccess")
-
+    
       // Optional Rule: If SL in extended test is -/+0, counts as -/+1
       if (Number(SL) == 0 && game.settings.get("wfrp4e", "extendedTests"))
         SL = 1;
-
+    
       // Critical Channel - miscast and set SL gained to CN
       if (testResults.roll % 11 == 0)
       {
         testResults.extra.color_green = true;
-        spell.data.cn.SL = spell.data.cn.value;
+        SL = spell.data.cn.value;
         testResults.extra.criticalchannell = game.i18n.localize("ROLL.CritChannel")
         if (testData.extra.AA)
           testResults.extra.miscastMitigation = -testData.extra.AA.SL*10
         miscastCounter++;
       }
     }
-
+    
     // Add SL to CN and update actor
-    spell.data.cn.SL += Number(SL);
-    if (spell.data.cn.SL > spell.data.cn.value)
-      spell.data.cn.SL = spell.data.cn.value;
-    else if (spell.data.cn.SL < 0)
-      spell.data.cn.SL = 0;
-
+    SL = spell.data.cn.SL + Number(SL);
+    if (SL > spell.data.cn.value)
+      SL = spell.data.cn.value;
+    else if ( SL < 0)
+      SL = 0;
+    
     actor.updateEmbeddedEntity("OwnedItem",
     {
       _id: spell._id,
-      'data.cn.SL': spell.data.cn.SL
+      'data.cn.SL': SL
     });
 
 
@@ -756,12 +770,12 @@ class DiceWFRP
     let chatData = {
       title: chatOptions.title,
       testData: testData,
-      hideData: game.user.isGM,
+      hideData: game.user.isGM
     }
 
     if (["gmroll", "blindroll"].includes(chatOptions.rollMode)) chatOptions["whisper"] = ChatMessage.getWhisperIDs("GM");
     if (chatOptions.rollMode === "blindroll") chatOptions["blind"] = true;
-    else if (chatOptions.rollMode === "selfroll") chatOptions["whisper"] = [game.user._id];
+    else if (chatOptions.rollMode === "selfroll") chatOptions["whisper"] = [game.user];
 
     // All the data need to recreate the test when chat card is edited
     chatOptions["flags.data"] = {
@@ -770,7 +784,14 @@ class DiceWFRP
       template: chatOptions.template,
       rollMode: chatOptions.rollMode,
       title: chatOptions.title,
-      hideData: chatData.hideData
+      hideData: chatData.hideData,
+      fortuneUsedReroll: chatOptions.fortuneUsedReroll,
+      fortuneUsedAddSL: chatOptions.fortuneUsedAddSL,
+      isOpposedTest: chatOptions.isOpposedTest,
+      attackerMessage: chatOptions.attackerMessage,
+      defenderMessage: chatOptions.defenderMessage,
+      unopposedStartMessage: chatOptions.unopposedStartMessage,
+      startMessagesList: chatOptions.startMessagesList
     };
 
     if (!rerenderMessage)
@@ -811,9 +832,10 @@ class DiceWFRP
         {
           content: html,
           ["flags.data"]: chatOptions["flags.data"]
-        }, true).then(newMsg =>
+        }).then(newMsg =>
         {
           ui.chat.updateMessage(newMsg);
+          return newMsg;
         });
       });
     }
@@ -1033,8 +1055,9 @@ class DiceWFRP
     html.on("click", '.unopposed-button', event =>
     {
       event.preventDefault()
-      let messageId = $(event.currentTarget).parents('.message').attr("data-message-id")
-      OpposedWFRP.resolveUnopposed(messageId)
+      let messageId = $(event.currentTarget).parents('.message').attr("data-message-id");
+
+      OpposedWFRP.resolveUnopposed(game.messages.get(messageId));
     })
 
     // Used to select damage dealt (there's 2 numbers if Tiring + impact/damaging)
@@ -1079,11 +1102,45 @@ class DiceWFRP
       }
       if (manual)
       {
-        if (message.data.flags.opposeData)
-          OpposedWFRP.clearOpposed();
+        game.messages.get(OpposedWFRP.attacker.messageId).update(
+        {
+          "flags.data.isOpposedTest": false
+        });
+        OpposedWFRP.clearOpposed();
       }
       ui.notifications.notify(game.i18n.localize("ROLL.CancelOppose"))
     })
+
+    // Click on botton related to the market/pay system
+    html.on("click", '.market-button', event =>
+    {
+      event.preventDefault();
+      // data-button tells us what button was clicked
+      switch ($(event.currentTarget).attr("data-button"))
+      {
+        case "rollAvailability":
+          MarketWfrp4e.generateSettlementChoice($(event.currentTarget).attr("data-rarity"));
+          break;
+        case "payItem":
+          if(!game.user.isGM)
+          {
+            let actor = game.user.character;
+            let money = duplicate(actor.data.items.filter(i => i.type == "money"));
+            money = MarketWfrp4e.payCommand($(event.currentTarget).attr("data-pay"),money);
+            if(money)
+              actor.updateEmbeddedEntity("OwnedItem", money);
+          }
+          break;
+        case "rollAvailabilityTest":
+          let options = {
+            settlement:$(event.currentTarget).attr("data-settlement").toLowerCase(),
+            rarity:$(event.currentTarget).attr("data-rarity").toLowerCase(),
+            modifier:0
+          };
+          MarketWfrp4e.testForAvailability(options);
+          break;
+      }
+    });
   }
 
   /**
