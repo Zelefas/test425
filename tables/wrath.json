@@ -67,7 +67,7 @@
     "range": [76, 80]
   }, {
     "name": "Purge the Flesh",
-    "description": "You suffer [[2d10]]+Sin points Wounds, ignoring Toughness Bonus and APs. Also attempt a <b>Hard (-20) Endurance</b> Test. If you fail gain one @Condition[Stunned] Condition. If you fail with -4 SL or fewer, gain an @Condition[Unconscious] Condition that lasts a minimum of [[1d10]] Rounds.",
+    "description": "You suffer [[2d10]]+Sin points Wounds, ignoring Toughness Bonus and APs. Also attempt a <b>Hard (-30) Endurance</b> Test. If you fail gain one @Condition[Stunned] Condition. If you fail with -4 SL or fewer, gain an @Condition[Unconscious] Condition that lasts a minimum of [[1d10]] Rounds.",
     "range": [81, 87]
   }, {
     "name": "Daemonic Interference",

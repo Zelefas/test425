@@ -69,7 +69,7 @@
   }, {
     "name": "Concussive Blow",
     "wounds": "4",
-    "description": "Your brain rattles in your skull as blood spurts from your nose and ears. Take 1 Deafened , 2 Bleeding , and <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> Stunned Conditions. Gain a Fatigued Condition that lasts for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> days. If you receive another Critical Wound to your head while suffering this Fatigued Condition, make an Average (+20) Endurance Test or also gain an Unconscious Condition.",
+    "description": "Your brain rattles in your skull as blood spurts from your nose and ears. Take 1 Deafened , 2 Bleeding , and [[1d10]] Stunned Conditions. Gain a Fatigued Condition that lasts for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> days. If you receive another Critical Wound to your head while suffering this Fatigued Condition, make an Average (+20) Endurance Test or also gain an Unconscious Condition.",
     "range": [76, 80]
   }, {
     "name": "Smashed Mouth",

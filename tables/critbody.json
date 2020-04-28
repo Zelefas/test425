@@ -24,17 +24,17 @@
   }, {
     "name": "Winded",
     "wounds": "2",
-    "description": "Gain a Stunned Condition. Make an Average (+20) Endurance Test, or gain the Prone Condition. Movement is halved for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> rounds as you get your breath back.",
+    "description": "Gain a Stunned Condition. Make an Average (+20) Endurance Test, or gain the Prone Condition. Movement is halved for [[1d10]] rounds as you get your breath back.",
     "range": [31, 35]
   }, {
     "name": "Bruised Ribs",
     "wounds": "2",
-    "description": "All Agility-based Tests suffer a -10 penalty for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> days.",
+    "description": "All Agility-based Tests suffer a -10 penalty for [[1d10]] days.",
     "range": [36, 40]
   }, {
     "name": "Wrenched Collar Bone",
     "wounds": "2",
-    "description": "Randomly select one arm. Drop whatever is held in that hand; the arm is useless for <a class = 'chat-roll'><i class='fas fa-dice'></i> 1d10</a> rounds.",
+    "description": "Randomly select one arm. Drop whatever is held in that hand; the arm is useless for [[1d10]] rounds.",
     "range": [41, 45]
   }, {
     "name": "Ragged Wound",
