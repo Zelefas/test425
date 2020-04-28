@@ -330,7 +330,7 @@
     "CHAT.CareerChoose" : "Choose Your Career",
     "CHAT.DamageError" : "Error calculating damage:",
     "CHAT.DamageAppliedError" : "No damage values. Ensure the attacker is using a damage-causing item, like a weapon.",
-    "CHAT.DamageAppliedErrorTiring" : "Cannot automate damage (likely due to Tiring)",
+    "CHAT.DamageAppliedErrorTiring" : "Cannot automate damage (likely due to Tiring, or the weapon/trait is not setup correctly)",
     "CHAT.DamageApplied" : "Damage Applied",
     "CHAT.DamageShield" : "Shield",
     "CHAT.CriticalsNullified" : "Criticals Nullified",
@@ -520,7 +520,7 @@
     "WFRP4E.SymptomTreatment.CoughsandSneezes" :  "None that work",
     "WFRP4E.SymptomTreatment.Fever" :  "There are many common, often disgusting, remedies for a fever, most of which don’t work (only 10% of commercial cures are genuine). A successful Heal Test does little more that inform you how long the fever will likely last. The cures range from a few pennies to many shillings in cost. If genuine, they will remove the symptoms of a Fever (not a severe one) if you pass a <b>Challenging (+0) Endurance</b> Test.",
     "WFRP4E.SymptomTreatment.Flux" :  "Real cures for the Flux are rare (10% of commercial remedies are genuine), but many apothecaries and herbalists swear theirs work every time. Costs vary widely according to where you buy the cures, from a few brass coins to small bag of silver. If genuine, the Flux can be held oﬀ for your Toughness Bonus in hours by taking a remedy.",
-    "WFRP4E.SymptomTreatment.Gangrene" :  "Amputation of the gangrenous location is the only eﬀective treatment.",
+    "WFRP4E.SymptomTreatment.Gangrene" :  "Amputation of the gangrenous location is the only effective treatment.",
     "WFRP4E.SymptomTreatment.Lingering" :  "Cures for lingering infections are commonplace and usually relatively cheap, rarely costing more than a shilling. However, almost all are fake or based on faulty lore. Any bought cure has only a 10% chance of being genuine, but if so will negate the need to roll the Endurance Test if taken on the correct day (which will require a successful Heal Test to determine).",
     "WFRP4E.SymptomTreatment.Malaise" :  "Medicine treating Malaise, costing anything from a few pence to a handful of silver, is usually genuine (75% chance); and, if so, pass a <b>Challenging (+0) Endurance</b> Test to ignore the symptom for the day.",
     "WFRP4E.SymptomTreatment.Nausea" :  "Remedies for Nausea are Common and usually genuine (60% chance), and typically cost around thirty pennies; if genuine, pass a <b>Challenging (+0) Endurance</b> Test, and the Nausea can be ignored for a number of hours equal to your Toughness Bonus.",
@@ -533,7 +533,54 @@
     "ITEM.LoreEffectPlaceholder" : "Override default Lore Effect",
     "ITEM.ChannelOverride" : "Channel Override",
     "ITEM.ChannelPlaceholder" : "Override default Channelling skill to use.",
-    "ITEM.DefaultDifficulty" : "Default Difficulty."
+    "ITEM.DefaultDifficulty" : "Default Difficulty.",
+
+    "NAME.Armour" : "Armour",
+    "NAME.Hardy" : "Armour",
+    "NAME.Small" : "Armour",
+    "NAME.Mindless" : "Armour",
+    "NAME.Construct" : "Armour",
+    "NAME.Swarm" : "Armour",
+    "NAME.Size" : "Armour",
+    "SPEC.Tiny" : "Tiny",
+    "SPEC.Little" : "Little",
+    "SPEC.Small" : "Small",
+    "SPEC.Average" : "Average",
+    "SPEC.Large" : "Large",
+    "SPEC.Enormous" : "Enormous",
+    "SPEC.Monstrous" : "Monstrous",
+
+    "NAME.BP" : "Brass Penny",
+    "NAME.SS" : "Silver Shilling",
+    "NAME.GC" : "Gold Crown",
+
+    "NAME.Pray" : "Pray",
+    "NAME.Language" : "Language",
+    "SPEC.Magick" : "Magick",
+    "NAME.Channelling" : "Channelling",
+    "NAME.Melee" : "Melee",
+    "NAME.Ranged" : "Ranged",
+    "NAME.Endurance" : "Endurance",
+
+    "SPEC.Basic" : "Basic",
+    "SPEC.Cavalry" : "Cavalry",
+    "SPEC.Fencing" : "Fencing",
+    "SPEC.Brawling" : "Brawling",
+    "SPEC.Flail" : "Flail",
+    "SPEC.Parry" : "Parry",
+    "SPEC.Polearm" : "Polearm",
+    "SPEC.TwoHanded" : "Two-handed",
+    "SPEC.Blackpowder" : "Blacpowder",
+    "SPEC.Bow" : "Bow",
+    "SPEC.Crossbow" : "Crossbow",
+    "SPEC.Entangling" : "Entangling",
+    "SPEC.Engineering" : "Engineering",
+    "SPEC.Explosives" : "Explosives",
+    "SPEC.Sling" : "Sling",
+    "SPEC.Throwing" : "Throwing",
+
+
+    
 
 
 }

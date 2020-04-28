@@ -262,12 +262,12 @@ class ActorWfrp4e extends Actor {
    * @param {Object} skill    The skill item being tested. Skill items contain the advancements and the base characteristic, see template.json for more information.
    * @param {bool}   income   Whether or not the skill is being tested to determine Income.
    */
-  setupSkill(skill, income = false) {
+  setupSkill(skill, options = {}) {
     let title = skill.name + " " + game.i18n.localize("Test");
     let testData = {
       hitLocation : false,
       triggers : this.data.flags.triggers,
-      income : income,
+      income : options.income,
       extra : {
         size : this.data.data.details.size.value
       }

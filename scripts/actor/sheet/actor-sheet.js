@@ -377,7 +377,13 @@ class ActorSheetWfrp4e extends ActorSheet {
 
     // Rest
     html.find('.rest-icon').click(async event => {
-      this.actor.setupCharacteristic("t", {rest: true})
+
+      let skill = this.actor.items.find(s => s.data.name == "Endurance" && s.type == "skill")
+      if (skill)
+        this.actor.setupSkill(skill.data)
+      else 
+        this.actor.setupCharacteristic("t", {rest: true})
+       
     })
 
   // Roll a trait (right click to show dropdown description)
