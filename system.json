@@ -181,7 +181,7 @@
   "compatibleCoreVersion" : "0.5.5",
   "templateVersion":2,
   "socket": true,
-  "manifest" :  "https://raw.githubusercontent.com/moo-man/WFRP-4th-Homebrew-FoundryVTT/stable/template.json",
+  "manifest" :  "https://raw.githubusercontent.com/moo-man/WFRP-4th-Homebrew-FoundryVTT/stable/system.json",
   "download" :  "https://github.com/moo-man/WFRP-4th-Homebrew-FoundryVTT/archive/stable.zip",
   "url" : "https://github.com/moo-man/WFRP-4th-Homebrew-FoundryVTT"
 }
