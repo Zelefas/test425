@@ -39,7 +39,7 @@ class WFRP_Utility
     let properties = mergeObject(WFRP_Utility.qualityList(), WFRP_Utility.flawList()), // Property names
         propertyDescr = Object.assign(duplicate(WFRP4E.qualityDescriptions), WFRP4E.flawDescriptions); // Property descriptions
 
-    property = property.replace(/,/g, '').trim(); // Remove commas/whitespace
+    property = this.parsePropertyName(property.replace(/,/g, '').trim());
     let propertyKey = "";
     propertyKey = WFRP_Utility.findKey(property.split(" ")[0], properties)
 
@@ -140,9 +140,9 @@ class WFRP_Utility
     let allFlaws = Object.values(this.flawList());
     for (let prop of properties)
     {
-      if (allQualities.includes(prop.split(" ")[0]))
+      if (allQualities.includes(this.parsePropertyName(prop)))
         qualities.push(prop);
-      else if (allFlaws.includes(prop.split(" ")[0]))
+      else if (allFlaws.includes(this.parsePropertyName(prop)))
         flaws.push(prop);
       else
         special.push(prop);
@@ -576,8 +576,6 @@ class WFRP_Utility
   static postProperty(property)
   {
     let propertyDescription = this.propertyText(property);
-
-
     let chatOptions = {
       user: game.user._id,
       rollMode: game.settings.get("core", "rollMode"),
@@ -586,6 +584,20 @@ class WFRP_Utility
     if (["gmroll", "blindroll"].includes(chatOptions.rollMode)) chatOptions["whisper"] = ChatMessage.getWhisperIDs("GM");
     if (chatOptions.rollMode === "blindroll") chatOptions["blind"] = true;
     ChatMessage.create(chatOptions);
+  }
+
+  /**
+   * Helper function to easily find the property name
+   * // Todo: regex?
+   * @param {String} property 
+   */
+  static parsePropertyName(property)
+  {
+      property = property.trim();
+      if (!isNaN(property[property.length-1]))
+         return property.substring(0, property.length-2).trim()
+      else
+        return property;
   }
 
   /**
@@ -725,6 +737,8 @@ class WFRP_Utility
         return `<a class = "symptom-tag" data-symptom="${id}"><i class='fas fa-user-injured'></i> ${name ? name : id}</a>`
       case "Condition":
         return `<a class = "condition-chat" data-cond="${id}"><i class='fas fa-user-injured'></i> ${name ? name : id}</a>`
+      case "Pay":
+        return `<a class = "pay-link" data-pay="${id}"><i class="fas fa-coins"></i> ${name ? name : id}</a>`
     }
   }
 
@@ -858,6 +872,19 @@ class WFRP_Utility
       user: game.user._id,
       rollMode
     })
+  }
+
+
+    /**
+   * Handle a payment entity link
+   * 
+   * @param {Object} event clicke event
+   */
+  static handlePayClick(event)
+  {
+    let payString = $(event.currentTarget).attr("data-pay")
+    if (game.user.isGM)
+      MarketWfrp4e.generatePayCard(payString);
   }
 
   /**
