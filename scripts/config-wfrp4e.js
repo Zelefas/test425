@@ -827,7 +827,7 @@ WFRP4E.magicWind = {
 	"light": "Hysh",
 	"shadow": "Ulgu",
 	"hedgecraft": "None",
-	"witchcraft": "None",
+	"witchcraft": "Dhar",
 	"daemonology": "Dhar",
 	"necromancy": "Dhar",
 	"nurgle": "Dhar",

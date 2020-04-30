@@ -1395,7 +1395,7 @@ class ActorSheetWfrp4e extends ActorSheet {
     let classes = $(event.currentTarget);
     let expansionText = "";
 
-    let rangeBands = this.actor.prepareWeaponCombat(duplicate(this.actor.getEmbeddedEntity("OwnedItem", "ldC9LeBBbS5Jb1Ra"))).rangeBands
+    let rangeBands = this.actor.prepareWeaponCombat(duplicate(this.actor.getEmbeddedEntity("OwnedItem", li.attr("data-item-id")))).rangeBands
 
     // Breakdown weapon range bands for easy reference (clickable, see below)
     if (classes.hasClass("weapon-range"))

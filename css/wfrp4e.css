@@ -2390,11 +2390,11 @@
         left: 0px;
       }
       .app.window-app.sheet.item-sheet .tab .input-box.skills-textarea {
-        height: unset;
+        height: 100%;
       }
       .app.window-app.sheet.item-sheet .tab .input-box.skills-textarea textarea {
         resize: none;
-        text-align: unset;
+        height: 100%
       }
       .app.window-app.sheet.item-sheet .tab .label-text.skills-textarea {
         height: unset;
@@ -2577,6 +2577,9 @@
       background: none;
       border: none;
       color: black;
+    }
+    .app.window-app.sheet.item-sheet.career-sheet .skills{
+      height: 100%      
     }
 
 /* ==================== (C) DISEASES ========================== */
