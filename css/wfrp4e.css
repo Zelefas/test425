@@ -2394,7 +2394,8 @@
       }
       .app.window-app.sheet.item-sheet .tab .input-box.skills-textarea textarea {
         resize: none;
-        height: 100%
+        height: 100%;
+        text-align: unset
       }
       .app.window-app.sheet.item-sheet .tab .label-text.skills-textarea {
         height: unset;
@@ -2581,6 +2582,8 @@
     .app.window-app.sheet.item-sheet.career-sheet .skills{
       height: 100%      
     }
+
+
 
 /* ==================== (C) DISEASES ========================== */
   .app.window-app.sheet.item-sheet.disease-sheet .sheet-tabs {
@@ -3300,6 +3303,8 @@
     border: 1px dotted #463a3a;
     box-shadow: none;
     }
+
+
       
 /* ==================== (L) SIDEBAR CHAT FORM ================= */
 
@@ -14753,7 +14758,9 @@ border-image-outset: 0px !important;
     .app.window-app.filepicker .form-group.current-dir input {
       border-left: 1px solid #736953a6;
     }
-    .app.window-app.filepicker .file-directory {
+
+      .app.window-app.filepicker .folders-list,
+        .app.window-app.filepicker .files-list {
       background: url(../ui/frames/parchment-texture.png) repeat;
       border: 3px ridge #5d513e;
       border-radius: 0px;

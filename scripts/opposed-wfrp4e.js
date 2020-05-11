@@ -126,6 +126,10 @@ class OpposedWFRP
       let attackerSL = parseInt(attacker.testResult.SL);
       let defenderSL = parseInt(defender.testResult.SL);
       let differenceSL = 0;
+      opposeResult.speakerAttack = attacker.speaker
+      opposeResult.speakerDefend = defender.speaker
+      opposeResult.attackerTestResult = duplicate(attacker.testResult);
+      opposeResult.defenderTestResult = duplicate(defender.testResult);
 
       // If attacker has more SL OR the SLs are equal and the attacker's target number is greater than the defender's, then attacker wins. 
       // Note: I know this isn't technically correct by the book, where it states you use the tested characteristic/skill, not the target number, i'll be honest, I don't really care.
@@ -136,10 +140,6 @@ class OpposedWFRP
         // Update message
         opposeResult.result = game.i18n.format("OPPOSED.AttackerWins", {attacker: attacker.speaker.alias, defender: defender.speaker.alias, SL : differenceSL})
         opposeResult.img = attacker.img;
-        opposeResult.speakerAttack = attacker.speaker
-        opposeResult.speakerDefend = defender.speaker
-        opposeResult.attackerTestResult = duplicate(attacker.testResult);
-        opposeResult.defenderTestResult = duplicate(defender.testResult);
 
         // If Damage is a numerical value
         if (!isNaN(opposeResult.attackerTestResult.damage))
@@ -165,11 +165,19 @@ class OpposedWFRP
       }
       else // Defender won
       {
+        if (opposeResult.attackerTestResult.weapon
+            && (opposeResult.attackerTestResult.weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Bow")
+            || opposeResult.attackerTestResult.weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Crossbow")
+            || opposeResult.attackerTestResult.weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Blackpowder")
+            || opposeResult.attackerTestResult.weapon.data.weaponGroup.value == game.i18n.localize("SPEC.Engineering")))
+          WFRP_Utility.PlayContextAudio(opposeResult.attackerTestResult.weapon, {"type": "weapon", "equip": "miss"})
         opposeResult.winner = "defender"
         differenceSL = defenderSL - attackerSL; 
         opposeResult.result = game.i18n.format("OPPOSED.DefenderWins", {defender: defender.speaker.alias, attacker : attacker.speaker.alias, SL : differenceSL})
         opposeResult.img = defender.img
       }
+
+      Hooks.call("wfrp4e:opposedTestResult", opposeResult)
 
       // If targeting, Create a new result message
       if (options.target)
@@ -227,10 +235,7 @@ class OpposedWFRP
     {
       user: game.user._id,
       hideData: true,
-      flags:
-      {
-        "opposedStartMessage": true
-      },
+      flags:{"opposedStartMessage": true},
       content: `<div><b>${speaker.alias}<b> ${game.i18n.localize("ROLL.OpposedStart")}<div>`
     }).then(msg => this.startMessage = msg)
   }
